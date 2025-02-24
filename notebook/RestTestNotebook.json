@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "61ac67db-ee65-40f4-bbac-31ae21d196d9"
+				"spark.autotune.trackingId": "e51b68b3-2894-425b-bed3-73e62d5c3a3b"
 			}
 		},
 		"metadata": {
@@ -62,11 +62,21 @@
 					"from pyspark.sql.types import *\n",
 					"\n",
 					"# Read json to spark dataframe\n",
-					"df_paavo = spark.read.json(\"abfss://paavotest@group1adls.dfs.core.windows.net/paavotestdata.json\")\n",
+					"df_paavo = spark.read.json(\"abfss://paavo@group1adls.dfs.core.windows.net/paavo.json\")\n",
 					"\n",
 					"df_paavo.show(10)"
 				],
-				"execution_count": 2
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"display(df_paavo)"
+				],
+				"execution_count": 5
 			}
 		]
 	}
