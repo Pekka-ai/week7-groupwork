@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/Postinumeroalueittainen_avoin_tieto/uusin/",
+			"url": "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/Postinumeroalueittainen_avoin_tieto/uusin/paavo_pxt_12f8.px",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		},
