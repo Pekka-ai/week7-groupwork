@@ -1,0 +1,17 @@
+{
+	"name": "PaavoTest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HTTP_Paavo_test",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		},
+		"schema": {}
+	}
+}
