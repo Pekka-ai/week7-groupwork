@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "652386c6-9c91-4928-80fa-e9e3f1fc63be"
+				"spark.autotune.trackingId": "6b5b6acf-e814-47f5-a812-864bad087fd4"
 			}
 		},
 		"metadata": {
@@ -62,11 +62,28 @@
 					"from pyspark.sql.types import *\n",
 					"\n",
 					"# Read json to spark dataframe\n",
-					"df_paavo = spark.read.json(\"abfss://paavotest@group1adls.dfs.core.windows.net/paavotestdata.json\")\n",
+					"df_paavo = spark.read.option(\"multiline\", \"true\").json(\"abfss://paavotest@group1adls.dfs.core.windows.net/paavotestdata.json\")\n",
 					"\n",
-					"df_paavo.show(10)"
+					"df_paavo.printSchema()"
 				],
-				"execution_count": 8
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"from pyspark.sql.functions import col, explode\n",
+					"\n",
+					"df_data = df_paavo.select(explode(col(\"data\")).alias(\"data\"))\n",
+					"\n",
+					"df_flattened = df_data.select(\n",
+					"    col(\"data.key\")[0].alias(\"Kunta\"),   # Extract first element from key array\n",
+					"    col(\"data.values\")[0].alias(\"Asukkaat_yhteensa\")  # Extract first element from values array\n",
+					")\n",
+					"\n",
+					"df_flattened.show()\n",
+					""
+				],
+				"execution_count": 14
 			}
 		]
 	}
