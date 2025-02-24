@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "6b5b6acf-e814-47f5-a812-864bad087fd4"
+				"spark.autotune.trackingId": "597f628b-08e6-45e2-abab-068f1a694038"
 			}
 		},
 		"metadata": {
@@ -73,8 +73,10 @@
 				"source": [
 					"from pyspark.sql.functions import col, explode\n",
 					"\n",
+					"# Explode tha data array\n",
 					"df_data = df_paavo.select(explode(col(\"data\")).alias(\"data\"))\n",
 					"\n",
+					"# Key and values are arrays, extract only the first element using 0\n",
 					"df_flattened = df_data.select(\n",
 					"    col(\"data.key\")[0].alias(\"Kunta\"),   # Extract first element from key array\n",
 					"    col(\"data.values\")[0].alias(\"Asukkaat_yhteensa\")  # Extract first element from values array\n",
