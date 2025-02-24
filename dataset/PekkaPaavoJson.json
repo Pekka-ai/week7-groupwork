@@ -1,0 +1,17 @@
+{
+	"name": "PekkaPaavoJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "group1-synapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			}
+		},
+		"schema": {}
+	}
+}
