@@ -360,6 +360,6 @@
 		}
 	],
 	"response": {
-		"format": "json-stat2"
+		"format": "json"
 	}
 }
