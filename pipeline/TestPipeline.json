@@ -19,7 +19,7 @@
 						"type": "JsonSource",
 						"storeSettings": {
 							"type": "HttpReadSettings",
-							"requestMethod": "POST",
+							"requestMethod": "GET",
 							"requestTimeout": ""
 						},
 						"formatSettings": {
