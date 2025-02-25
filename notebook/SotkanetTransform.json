@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e677d5ad-89c8-4dd6-be17-1e4d59ab2ade"
+				"spark.autotune.trackingId": "d43a3c53-439d-4d5e-823e-173ded00b582"
 			}
 		},
 		"metadata": {
@@ -61,7 +61,7 @@
 					"import xlrd\n",
 					"import openpyxl"
 				],
-				"execution_count": 10
+				"execution_count": 12
 			},
 			{
 				"cell_type": "markdown",
@@ -81,7 +81,7 @@
 				"source": [
 					"\n",
 					"# Define the path to your Excel file in Lakehouse storage\n",
-					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/Psykologia.xlsx\"\n",
+					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/Psykologia.xls\"\n",
 					"\n",
 					"# Read Excel file into Pandas DataFrame\n",
 					"df_pandas = pd.read_excel(lakehouse_path, engine='openpyxl')\n",
@@ -95,7 +95,7 @@
 					"# Show the first 5 rows of the Spark DataFrame\n",
 					"df_spark.show(5)"
 				],
-				"execution_count": 11
+				"execution_count": null
 			}
 		]
 	}
