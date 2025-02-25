@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "dc231dda-7081-4806-904a-3e15abfd43c7"
+				"spark.autotune.trackingId": "6085b18c-bdf2-4cb0-94c7-05bb2e5d6a79"
 			}
 		},
 		"metadata": {
@@ -100,10 +100,10 @@
 					"    col(\"data.values\")[102].cast(IntegerType()).alias(\"Elakelaiset\"),\n",
 					").filter(~col(\"Kunta\").startswith(\"MK\"))  # Remove MK-prefixed rows\n",
 					"\n",
-					"df_cleaned.show()\n",
+					"df_cleaned.show(truncate=True)\n",
 					""
 				],
-				"execution_count": 24
+				"execution_count": 28
 			}
 		]
 	}
