@@ -1,5 +1,5 @@
 {
-	"name": "RestPaavoTest",
+	"name": "Rest_Paavo",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Rest_Paavo_Test",
