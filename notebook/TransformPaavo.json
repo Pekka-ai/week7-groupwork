@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "a53920b6-e46e-4012-901e-760a61c1ffc9"
+				"spark.autotune.trackingId": "858531b6-1723-4757-b016-d61fd3ef541d"
 			}
 		},
 		"metadata": {
@@ -59,7 +59,7 @@
 					"\n",
 					"df_paavo.printSchema()"
 				],
-				"execution_count": 5
+				"execution_count": 19
 			},
 			{
 				"cell_type": "code",
@@ -87,8 +87,8 @@
 					"    col(\"data.values\")[34].cast(IntegerType()).alias(\"Alimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
 					"    col(\"data.values\")[35].cast(IntegerType()).alias(\"Keskimmaiseen tuloluokkaan kuuluvat asukkaat\"),\n",
 					"    col(\"data.values\")[36].cast(IntegerType()).alias(\"Ylimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
-					"    col(\"data.values\")[39].cast(IntegerType()).alias(\"Talouksien keskikoko\"),\n",
-					"    col(\"data.values\")[40].cast(IntegerType()).alias(\"Asumisvaljyys\"),\n",
+					"    col(\"data.values\")[39].cast(FloatType()).alias(\"Talouksien keskikoko\"),\n",
+					"    col(\"data.values\")[40].cast(FloatType()).alias(\"Asumisvaljyys\"),\n",
 					"    col(\"data.values\")[41].cast(IntegerType()).alias(\"Yksinasuvien taloudet\"),\n",
 					"    col(\"data.values\")[52].cast(IntegerType()).alias(\"Omistusasunnoissa asuvat taloudet\"),\n",
 					"    col(\"data.values\")[53].cast(IntegerType()).alias(\"Vuokra-asunnoissa asuvat taloudet\"),\n",
@@ -103,7 +103,7 @@
 					"df_cleaned.show()\n",
 					""
 				],
-				"execution_count": 18
+				"execution_count": 21
 			}
 		]
 	}
