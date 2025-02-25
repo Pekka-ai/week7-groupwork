@@ -3,6 +3,7 @@
 # Synapse & ETL Project
 
 ### Data Modeling Plan
+---
 Objective: Create a data model based on the use case
 
 Steps:
