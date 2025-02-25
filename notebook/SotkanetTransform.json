@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "0253c6df-9fbb-4559-9a49-1f4b095beb8d"
+				"spark.autotune.trackingId": "c33522be-af51-4a06-8080-3811381f7210"
 			}
 		},
 		"metadata": {
@@ -119,7 +119,7 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"new_headers = [Kunta, Kuntanumero, muut sarakkeet]"
+					"new_headers = [Kunta, Kuntanumero, Masennuslaakkeista ]"
 				],
 				"execution_count": null
 			}
