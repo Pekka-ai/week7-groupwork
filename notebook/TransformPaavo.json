@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "c9854127-c378-4c32-b9b1-3bbfc8edb2ed"
+				"spark.autotune.trackingId": "ea9eea4e-c666-49eb-845b-409c2b311ab2"
 			}
 		},
 		"metadata": {
@@ -72,8 +72,21 @@
 					"# Key and values are arrays, extract elements (103 in total) and cast wanted columns to correct type \n",
 					"df_cleaned = df_data.select(\n",
 					"    regexp_replace(col(\"data.key\")[0], \"^KU\", \"\").alias(\"Kunta\"),  # Remove 'KU' but keep as string\n",
-					"    col(\"data.values\")[0].cast(IntegerType()).alias(\"Asukkaat_yhteensa\"), # Cast to integer\n",
-					"    col(\"data.values\")[1].cast(IntegerType()).alias(\"Miehet\")\n",
+					"    col(\"data.values\")[0].cast(IntegerType()).alias(\"Asukkaat yhteensa\"), # Cast to integer\n",
+					"    col(\"data.values\")[1].cast(IntegerType()).alias(\"Miehet\"),\n",
+					"    col(\"data.values\")[2].cast(IntegerType()).alias(\"Naiset\"),\n",
+					"    col(\"data.values\")[3].cast(IntegerType()).alias(\"Asukkaiden keski-ika\"),\n",
+					"    col(\"data.values\")[24].cast(IntegerType()).alias(\"18 vuotta tayttaneet yhteensa\"),\n",
+					"    col(\"data.values\")[26].cast(IntegerType()).alias(\"Koulutetut yhteensa\"),\n",
+					"    col(\"data.values\")[27].cast(IntegerType()).alias(\"Ylioppilastutkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[28].cast(IntegerType()).alias(\"Ammatillisen tutkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[29].cast(IntegerType()).alias(\"Alimman korkea-asteen tai alemman korkeakoulututkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[30].cast(IntegerType()).alias(\"Ylemman korkeakoulututkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[32].cast(IntegerType()).alias(\"Asukkaiden keskitulot\"),\n",
+					"    col(\"data.values\")[33].cast(IntegerType()).alias(\"Asukkaiden mediaanitulot\"),\n",
+					"    col(\"data.values\")[34].cast(IntegerType()).alias(\"Alimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
+					"    col(\"data.values\")[35].cast(IntegerType()).alias(\"Keskimmaiseen tuloluokkaan kuuluvat asukkaat\"),\n",
+					"    col(\"data.values\")[36].cast(IntegerType()).alias(\"Ylimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
 					").filter(~col(\"Kunta\").startswith(\"MK\"))  # Remove MK-prefixed rows\n",
 					"\n",
 					"df_cleaned.show()\n",
