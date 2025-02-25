@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ef2d9f5b-c7fb-49a7-81a1-fadb9bb2b261"
+				"spark.autotune.trackingId": "484ef2ee-de6e-4247-8f25-a7ef7e5334f8"
 			}
 		},
 		"metadata": {
@@ -82,32 +82,10 @@
 					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/\"\n",
 					"filename = \"Psykologia.xlsx\"\n",
 					"\n",
-					"# read to df frame with modular path\n",
-					"df_psykologia = pd.read_excel(\n",
-					"    f\"{lakehouse_path}{filename}\", \n",
-					"    engine='openpyxl', \n",
-					"    header=1,  \n",
-					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
-					")\n",
-					"\n",
 					"# Read other files\n",
-					"filename = \"Paihde.xlsx\"\n",
-					"df_paihde = pd.read_excel(\n",
-					"    f\"{lakehouse_path}{filename}\", \n",
-					"    engine='openpyxl', \n",
-					"    header=1,  \n",
-					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
-					")\n",
-					"\n",
-					"filename = \"VaikuttavatTekijat.xlsx\"\n",
-					"df_vaikuttavat = pd.read_excel(\n",
-					"    f\"{lakehouse_path}{filename}\", \n",
-					"    engine='openpyxl', \n",
-					"    header=1,  \n",
-					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
-					")"
+					""
 				],
-				"execution_count": 12
+				"execution_count": 20
 			},
 			{
 				"cell_type": "markdown",
@@ -125,13 +103,15 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"df_psykologia.head()"
-				],
-				"execution_count": 13
-			},
-			{
-				"cell_type": "code",
-				"source": [
+					"# read to df frame with modular path\n",
+					"\n",
+					"df_psykologia = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
+					"\n",
 					"# Write new headers as a list\n",
 					"\n",
 					"new_headers = [\"Kunta\", \"Kuntanumero\", \"Masennuslaakkeista korvausta saaneet 0-17v\",\n",
@@ -145,16 +125,16 @@
 					"    \"Masennuslaakkeista korvausta saaneet 18-64v\",\n",
 					"    \"Kuntoutuspsykoterapiaa saaneet 25-65v\",\n",
 					"    \"Psykiatrian laitoshoidon potilaat\"\n",
-					"]\n",
+					"    ]\n",
 					"\n",
-					"# Convert 1/1000 to percentage\n",
+					"# Convert per 1,000 to percentage\n",
 					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)\n",
 					"\n",
-					"# Check that columns have correct number of decimals and that types are correct\n",
+					"df_psykologia[\"Masennuslaakkeista korvausta saaneet 0-17v\"] = df_psykologia[\"Masennuslaakkeista korvausta saaneet 0-17v\"].round(2)\n",
 					"\n",
 					"df_psykologia.head()"
 				],
-				"execution_count": 15
+				"execution_count": 26
 			},
 			{
 				"cell_type": "markdown",
@@ -179,18 +159,107 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"new_headers = []\n",
+					"filename = \"VaikuttavatTekijat.xlsx\"\n",
+					"df_vaikuttavat = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
+					"\n",
+					"new_headers = [\"Kunta\", \"Kuntanumero\",\"Asunnottomat\",\"Kodin ulkopuolelle sijoitetut 13-17v\",\n",
+					"\"Koulutuksen ulkopuolella 17-24v\", \"Toimeentulotukea saavissa kotitalouksissa asuvat\"]\n",
 					"\n",
 					"df_vaikuttavat.columns = new_headers\n",
 					"\n",
-					"# Define the columns that need to be converted from per 1,000 to percentages\n",
-					"columns_to_convert = [\n",
-					"    \"\",\n",
-					"    \"\",\n",
-					"    \"\"\n",
+					"# List of columns to round\n",
+					"columns_to_dcm = [\n",
+					"    \"Asunnottomat\",\n",
+					"    \"Kodin ulkopuolelle sijoitetut 13-17v\",\n",
+					"    \"Koulutuksen ulkopuolella 17-24v\",\n",
+					"    \"Toimeentulotukea saavissa kotitalouksissa asuvat\"\n",
 					"]\n",
 					"\n",
-					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)"
+					"# Apply rounding to each specified column\n",
+					"df_vaikuttavat[columns_to_dcm] = df_vaikuttavat[columns_to_dcm].round(2)\n",
+					"\n",
+					"df_vaikuttavat.head()"
+				],
+				"execution_count": 28
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Cleaning Paihde-Table"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df_paihde.head()"
+				],
+				"execution_count": 38
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"filename = \"Paihde.xlsx\"\n",
+					"df_paihde = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
+					"\n",
+					"# Write new headers as a list\n",
+					"\n",
+					"new_headers = [\n",
+					"    \"Kunta\", \"Kuntanumero\", \"Alkoholijuomien myynti asukasta kohti 100 %:n alkoholina, litraa\",\n",
+					"    \"Omalla paikkakunnalla helppo hankkia huumeita 8-9lk\",\n",
+					"    \"Poliisin tietoon tulleet huumausainerikokset\",\n",
+					"    \"Poliisin tietoon tulleet rattijuopumustapaukset\",\n",
+					"    \"Paihdehuollon asumispalveluissa asiakkaita\",\n",
+					"    \"Paihdehuollon avopalveluissa asiakkaita\",\n",
+					"    \"Paihteiden vaikutuksen alaisina tehdyt rikokset\",\n",
+					"    \"Paihtyneiden sailoonotot\",\n",
+					"    \"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 4-5lk\",\n",
+					"    \"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 1-2lk lukio\"\n",
+					"]\n",
+					"\n",
+					"df_paihde.columns = new_headers\n",
+					"\n",
+					"\n",
+					"# List the columns to be converted (those with values per 1,000 people)\n",
+					"columns_to_convert = [\n",
+					"    \"Poliisin tietoon tulleet huumausainerikokset\",\n",
+					"    \"Poliisin tietoon tulleet rattijuopumustapaukset\",\n",
+					"    \"Paihdehuollon asumispalveluissa asiakkaita\",\n",
+					"    \"Paihdehuollon avopalveluissa asiakkaita\",\n",
+					"    \"Paihteiden vaikutuksen alaisina tehdyt rikokset\",\n",
+					"    \"Paihtyneiden sailoonotot\"\n",
+					"]\n",
+					"\n",
+					"# Convert per 1,000 to percentage\n",
+					"df_paihde[columns_to_convert] = df_paihde[columns_to_convert] / 10\n",
+					"df_paihde[\"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 4-5lk\"] = df_paihde[\"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 4-5lk\"].round(2)\n",
+					"df_paihde[\"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 1-2lk lukio\"] = df_paihde[\"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 1-2lk lukio\"].round(2)\n",
+					"\n",
+					"# Check the result\n",
+					"df_paihde.head()"
+				],
+				"execution_count": 57
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					""
 				],
 				"execution_count": null
 			}
