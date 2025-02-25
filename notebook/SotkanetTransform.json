@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "c33522be-af51-4a06-8080-3811381f7210"
+				"spark.autotune.trackingId": "06981701-839c-45bb-b9c6-b46a7987e8ea"
 			}
 		},
 		"metadata": {
@@ -55,13 +55,12 @@
 					"print(\"Moro maailma!\")\n",
 					"\n",
 					"# Get required libraries\n",
-					"# to install %pip install openpyxl xlrd\n",
+					"%pip install openpyxl\n",
 					"import pyspark as ps \n",
 					"import pandas as pd\n",
-					"import xlrd\n",
 					"import openpyxl"
 				],
-				"execution_count": 37
+				"execution_count": 46
 			},
 			{
 				"cell_type": "markdown",
@@ -94,7 +93,7 @@
 					"df_vaikuttavat = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
 					""
 				],
-				"execution_count": 40
+				"execution_count": 47
 			},
 			{
 				"cell_type": "markdown",
@@ -114,14 +113,34 @@
 				"source": [
 					"df_psykologia.head()"
 				],
-				"execution_count": 43
+				"execution_count": 48
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					"new_headers = [Kunta, Kuntanumero, Masennuslaakkeista ]"
+					"# Write new headers as a list\n",
+					"\n",
+					"new_headers = [\"Kunta\", \"Kuntanumero\", \"Masennuslaakkeista korvausta saaneet 0-17v\",\n",
+					"\"Masennuslaakkeista korvausta saaneet 18-64v\", \"Kuntoutuspsykoterapiaa saaneet 25-65v\", \"Psykiatrian laitoshoidon potilaat\"]\n",
+					"\n",
+					"# Insert as headers\n",
+					"df_psykologia.columns = new_headers\n",
+					"\n",
+					"\n",
+					"\n",
+					"\n",
+					"# Define the columns that need to be converted from per 1,000 to percentages\n",
+					"columns_to_convert = [\n",
+					"    \"Masennuslaakkeista korvausta saaneet 18-64v\",\n",
+					"    \"Kuntoutuspsykoterapiaa saaneet 25-65v\",\n",
+					"    \"Psykiatrian laitoshoidon potilaat\"\n",
+					"]\n",
+					"\n",
+					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)\n",
+					"\n",
+					"df_psykologia.head()"
 				],
-				"execution_count": null
+				"execution_count": 56
 			}
 		]
 	}
