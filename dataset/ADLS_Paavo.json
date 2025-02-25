@@ -1,5 +1,5 @@
 {
-	"name": "ADLS_Paavo_test",
+	"name": "ADLS_Paavo",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_group1",

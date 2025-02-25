@@ -44,7 +44,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ADLS_Paavo_test",
+						"referenceName": "ADLS_Paavo",
 						"type": "DatasetReference"
 					}
 				]
