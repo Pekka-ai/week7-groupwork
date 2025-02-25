@@ -1,0 +1,19 @@
+{
+	"name": "ADLS_Paavo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_group1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "paavotestdata.json",
+				"fileSystem": "paavotest"
+			}
+		},
+		"schema": {}
+	}
+}

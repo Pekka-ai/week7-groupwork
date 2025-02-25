@@ -1,0 +1,108 @@
+{
+	"name": "TransformPaavo",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "2a390b8a-3e61-4e11-a52b-eba8b273e9c3"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"from pyspark.sql import SparkSession\n",
+					"from pyspark.sql.types import *\n",
+					"\n",
+					"# Read json to spark dataframe\n",
+					"df_paavo = spark.read.option(\"multiline\", \"true\").json(\"abfss://paavotest@group1adls.dfs.core.windows.net/paavotestdata.json\")"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"from pyspark.sql.functions import col, explode, regexp_replace\n",
+					"\n",
+					"# Explode tha data array\n",
+					"df_data = df_paavo.select(explode(col(\"data\")).alias(\"data\"))\n",
+					"\n",
+					"# Key and values are arrays, extract elements (103 in total) and cast wanted columns to correct type \n",
+					"df_cleaned = df_data.select(\n",
+					"    regexp_replace(col(\"data.key\")[0], \"^KU\", \"\").alias(\"Kunta\"),  # Remove 'KU' but keep as string\n",
+					"    col(\"data.values\")[0].cast(IntegerType()).alias(\"Asukkaat yhteensa\"), # Cast to integer\n",
+					"    col(\"data.values\")[1].cast(IntegerType()).alias(\"Miehet\"),\n",
+					"    col(\"data.values\")[2].cast(IntegerType()).alias(\"Naiset\"),\n",
+					"    col(\"data.values\")[3].cast(IntegerType()).alias(\"Asukkaiden keski_ika\"),\n",
+					"    col(\"data.values\")[24].cast(IntegerType()).alias(\"18 vuotta tayttaneet yhteensa\"),\n",
+					"    col(\"data.values\")[26].cast(IntegerType()).alias(\"Koulutetut yhteensa\"),\n",
+					"    col(\"data.values\")[27].cast(IntegerType()).alias(\"Ylioppilastutkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[28].cast(IntegerType()).alias(\"Ammatillisen tutkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[29].cast(IntegerType()).alias(\"Alimman korkea_asteen tai alemman korkeakoulututkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[30].cast(IntegerType()).alias(\"Ylemman korkeakoulututkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[32].cast(IntegerType()).alias(\"Asukkaiden keskitulot\"),\n",
+					"    col(\"data.values\")[33].cast(IntegerType()).alias(\"Asukkaiden mediaanitulot\"),\n",
+					"    col(\"data.values\")[34].cast(IntegerType()).alias(\"Alimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
+					"    col(\"data.values\")[35].cast(IntegerType()).alias(\"Keskimmaiseen tuloluokkaan kuuluvat asukkaat\"),\n",
+					"    col(\"data.values\")[36].cast(IntegerType()).alias(\"Ylimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
+					"    col(\"data.values\")[39].cast(FloatType()).alias(\"Talouksien keskikoko\"),\n",
+					"    col(\"data.values\")[40].cast(FloatType()).alias(\"Asumisvaljyys\"),\n",
+					"    col(\"data.values\")[41].cast(IntegerType()).alias(\"Yksinasuvien taloudet\"),\n",
+					"    col(\"data.values\")[52].cast(IntegerType()).alias(\"Omistusasunnoissa asuvat taloudet\"),\n",
+					"    col(\"data.values\")[53].cast(IntegerType()).alias(\"Vuokra_asunnoissa asuvat taloudet\"),\n",
+					"    col(\"data.values\")[71].cast(IntegerType()).alias(\"Tyopaikat yhteensa\"),\n",
+					"    col(\"data.values\")[98].cast(IntegerType()).alias(\"Tyolliset\"),\n",
+					"    col(\"data.values\")[99].cast(IntegerType()).alias(\"Tyottomat\"),\n",
+					"    col(\"data.values\")[100].cast(IntegerType()).alias(\"Lapset 0_14_vuotiaat\"),\n",
+					"    col(\"data.values\")[101].cast(IntegerType()).alias(\"Opiskelijat\"),\n",
+					"    col(\"data.values\")[102].cast(IntegerType()).alias(\"Elakelaiset\"),\n",
+					").filter(~col(\"Kunta\").startswith(\"MK\"))  # Remove MK-prefixed rows\n",
+					"\n",
+					"df_cleaned.show(truncate=True)\n",
+					""
+				],
+				"execution_count": 28
+			}
+		]
+	}
+}

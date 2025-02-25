@@ -1,0 +1,16 @@
+{
+	"name": "Rest_Paavo_Test",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/Postinumeroalueittainen_avoin_tieto/uusin/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
