@@ -24,6 +24,7 @@ Objective: Use GitHub to track and manage changes in code and pipeline configura
 Steps:
 * Create GitHub repository and invite collaborators
 * Set up GitHub repository in Synapse Workspace
+* Set up new branches for all work
 
 ### 4. Design pipeline process
 Objective: Design the ETL pipeline
