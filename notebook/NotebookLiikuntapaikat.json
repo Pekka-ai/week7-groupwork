@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ec6f2966-66cd-48da-8912-2af885e26748"
+				"spark.autotune.trackingId": "0795f1c2-64a1-4978-bd33-fb5dd77c66d5"
 			}
 		},
 		"metadata": {
@@ -68,7 +68,7 @@
 				"source": [
 					"print(\"m\")"
 				],
-				"execution_count": 16
+				"execution_count": 1
 			},
 			{
 				"cell_type": "code",
@@ -89,7 +89,7 @@
 					"print(df_liikunta.columns)\n",
 					""
 				],
-				"execution_count": 32
+				"execution_count": 2
 			},
 			{
 				"cell_type": "code",
@@ -100,15 +100,14 @@
 					"df_kunnat = spark_df_kunnat.toPandas()\n",
 					"#print(df_kunnat.columns)\n",
 					"\n",
-					"df_liikunta_with_code = pd.merge(df_liikunta, df_kunnat[['Kunta', 'Kunnan numero']], on='Kunta', how='left')\n",
+					"df_liikunta_with_code = pd.merge(df_liikunta, df_kunnat[['Kunta', 'Kunta_koodi']], on='Kunta', how='left')\n",
 					"\n",
-					"#Näytä yhdistetty DataFrame\n",
 					"\n",
+					"#Valitaan halutut sarakkeet ja nimetään uudelleen\n",
 					"df_selected = df_liikunta_with_code [\n",
-					"    ['Kunnan numero', 'Kunta', 'Maakunta', 'Asukasluku 2022', \n",
+					"    ['Kunta_koodi', 'Kunta', 'Maakunta', 'Asukasluku 2022', \n",
 					"    'Liikuntapaikkojen lkm', 'Liikuntapaikkojen lkm/1000 asukasta', \n",
 					"    'Liikuntapinta-ala m²/asukas', 'Reittien pituus km/asukas']].rename(columns={\n",
-					"    'Kunnan numero': 'Kunta_numero',\n",
 					"    'Asukasluku 2022': 'Asukasluku',\n",
 					"    'Liikuntapaikkojen lkm': 'Liikuntapaikkojen_lkm',\n",
 					"    'Liikuntapaikkojen lkm/1000 asukasta': 'Liikuntapaikkojen_lkm_per_1000',\n",
@@ -116,11 +115,14 @@
 					"    'Reittien pituus km/asukas': 'Reittien_pituus_km_per_asukas'\n",
 					"})\n",
 					"\n",
-					"df_selected['Kunta_numero'] = df_selected['Kunta_numero'].astype(str).str.zfill(3)\n",
+					"df_selected['Kunta_koodi'] = df_selected['Kunta_koodi'].astype(str).str.zfill(3)\n",
+					"\n",
+					"#tsekataan jäikö joku kunta ilman koodia\n",
+					"#print(df_selected['Kunta_koodi'].isna().sum())\n",
 					"\n",
 					"print(df_selected.head(5))"
 				],
-				"execution_count": 54
+				"execution_count": 4
 			}
 		]
 	}
