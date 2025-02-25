@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "43652ad8-ec1e-44f8-9fdb-098be668852c"
+				"spark.autotune.trackingId": "12320a05-e606-47e6-9af0-0a2243da902b"
 			}
 		},
 		"metadata": {
@@ -58,7 +58,7 @@
 					}
 				},
 				"source": [
-					"## Notebook Kunnat\n",
+					"## Notebook Kunnat 🏡\n",
 					"### Käsittelee kunnat excelin"
 				]
 			},
@@ -67,7 +67,7 @@
 				"source": [
 					"print(\"moo\")"
 				],
-				"execution_count": 4
+				"execution_count": 5
 			},
 			{
 				"cell_type": "code",
@@ -98,11 +98,21 @@
 					"# Pakotetaan halutut sarakkeet merkkijonoiksi ja täytetään etunollilla tarvittaessa\n",
 					"df[string_columns] = df[string_columns].astype(str).apply(lambda x: x.str.zfill(x.str.len().max()))"
 				],
-				"execution_count": 11
+				"execution_count": 7
 			},
 			{
 				"cell_type": "code",
 				"source": [
+					"print(df.columns)"
+				],
+				"execution_count": 10
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"#poistetaan tyhjät lyönnit\n",
+					"df.columns = df.columns.str.strip()\n",
+					"\n",
 					"# Valitaan halutut sarakkeet\n",
 					"selected_columns = [\n",
 					"    'Kunnan numero', 'Kunta', 'Maakunnan koodi', 'Maakunta', \n",
@@ -112,6 +122,17 @@
 					"]\n",
 					"\n",
 					"df_selected = df[selected_columns]\n",
+					"\n",
+					"df_selected.rename(columns={\n",
+					"    'Kunnan numero': 'Kunta_koodi',\n",
+					"    'Maakunnan koodi': 'Maakunta_koodi',\n",
+					"    'Hyvinvointialueen koodi': 'Hyvinvointialue_koodi',\n",
+					"    'Seutukuntakoodi': 'Seutukunta_koodi',\n",
+					"    'Suuralue koodi': 'Suuralue_koodi',\n",
+					"    'Kuntaryhmä koodi': 'Kuntaryhma_koodi',\n",
+					"    'Kuntaryhmä': 'Kuntaryhma',\n",
+					"    'Kielisuhde koodi': 'Kielisuhde_koodi'\n",
+					"})\n",
 					"\n",
 					""
 				],
@@ -131,7 +152,7 @@
 					"\n",
 					"print(f\"Tiedosto on tallennettu: {output_file_path}\")"
 				],
-				"execution_count": 15
+				"execution_count": 13
 			}
 		]
 	}
