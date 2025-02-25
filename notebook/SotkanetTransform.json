@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e22fa680-fa7e-45b3-a832-be5f47176059"
+				"spark.autotune.trackingId": "e677d5ad-89c8-4dd6-be17-1e4d59ab2ade"
 			}
 		},
 		"metadata": {
@@ -52,9 +52,16 @@
 				"cell_type": "code",
 				"source": [
 					"# Starting spark\n",
-					"print(\"Moro maailma!\")"
+					"print(\"Moro maailma!\")\n",
+					"\n",
+					"# Get required libraries\n",
+					"%pip install openpyxl xlrd\n",
+					"import pyspark as ps \n",
+					"import pandas as pd\n",
+					"import xlrd\n",
+					"import openpyxl"
 				],
-				"execution_count": 1
+				"execution_count": 10
 			},
 			{
 				"cell_type": "markdown",
@@ -72,26 +79,23 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"# Define the path to your CSV file in Lakehouse storage\n",
-					"lakehouse_path = \"abfss://group1adls@group1-week7.dfs.core.windows.net/sotkanet-data/Psykologia.csv\"\n",
 					"\n",
-					"# Read CSV into Spark DataFrame\n",
-					"df_spark = spark.read.csv(lakehouse_path, header=True, inferSchema=True)\n",
+					"# Define the path to your Excel file in Lakehouse storage\n",
+					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/Psykologia.xlsx\"\n",
 					"\n",
-					"# Convert Spark DataFrame to Pandas\n",
-					"df_pandas = df_spark.toPandas()\n",
+					"# Read Excel file into Pandas DataFrame\n",
+					"df_pandas = pd.read_excel(lakehouse_path, engine='openpyxl')\n",
 					"\n",
-					"# Show Data\n",
-					"df_pandas.head()"
+					"# Show the first 5 rows of the DataFrame\n",
+					"df_pandas.head()\n",
+					"\n",
+					"# If you want to convert the Pandas DataFrame to a Spark DataFrame\n",
+					"df_spark = spark.createDataFrame(df_pandas)\n",
+					"\n",
+					"# Show the first 5 rows of the Spark DataFrame\n",
+					"df_spark.show(5)"
 				],
-				"execution_count": 3
-			},
-			{
-				"cell_type": "code",
-				"source": [
-					""
-				],
-				"execution_count": null
+				"execution_count": 11
 			}
 		]
 	}
