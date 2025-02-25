@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "2651031a-4dc9-47ff-8620-49b06a37ab9d"
+				"spark.autotune.trackingId": "e043cc46-e5d8-4488-8933-a0e89a6712a8"
 			}
 		},
 		"metadata": {
@@ -64,7 +64,7 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"from pyspark.sql.functions import col, explode\n",
+					"from pyspark.sql.functions import col, explode, regexp_replace\n",
 					"\n",
 					"# Explode tha data array\n",
 					"df_data = df_paavo.select(explode(col(\"data\")).alias(\"data\"))\n",
@@ -79,10 +79,13 @@
 					"# Delete all rows starting with MK to keep only cities\n",
 					"df_filtered = df_flattened.filter(~col(\"Kunta\").startswith(\"MK\"))\n",
 					"\n",
-					"df_filtered.show()\n",
+					"# Delete \"KU\" from the beginning of Kunta\n",
+					"df_cleaned = df_filtered.withColumn(\"Kunta\", regexp_replace(col(\"Kunta\"), \"^KU\", \"\"))\n",
+					"\n",
+					"df_cleaned.show()\n",
 					""
 				],
-				"execution_count": 8
+				"execution_count": 9
 			}
 		]
 	}
