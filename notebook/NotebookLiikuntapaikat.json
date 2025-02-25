@@ -1,0 +1,129 @@
+{
+	"name": "NotebookLiikuntapaikat",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "0795f1c2-64a1-4978-bd33-fb5dd77c66d5"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Notebook Liikuntapaikat 🏃\n",
+					"### Käsittelee liikuntapaikat excelin ja liittää siihen kuntanumeron\n",
+					"* Aja ensin NotebookKunnat"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"print(\"m\")"
+				],
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"import pandas as pd\n",
+					"\n",
+					"# ADLS Gen2 -tiedoston polku\n",
+					"file_path_liikuntapaikat = \"abfss://liikuntapaikat@group1adls.dfs.core.windows.net/Liikunta_paikat_kunnittain.xlsx\"\n",
+					"file_path_kunnat = \"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_2024_muokattu.csv\"\n",
+					"\n",
+					"\n",
+					"# Lue Excel-tiedosto, ohitetaan ensimmäinen rivi ja käytetään toista riviä otsikkona\n",
+					"df_liikunta = pd.read_excel(file_path_liikuntapaikat, engine=\"openpyxl\")\n",
+					"\n",
+					"# Näytetään DataFrame\n",
+					"print(df_liikunta.head(5))\n",
+					"\n",
+					"print(df_liikunta.columns)\n",
+					""
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"file_path_kunnat = \"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_2024_muokattu.csv\"\n",
+					"\n",
+					"spark_df_kunnat = spark.read.csv(file_path_kunnat, header=True, sep=\";\", inferSchema=True)\n",
+					"df_kunnat = spark_df_kunnat.toPandas()\n",
+					"#print(df_kunnat.columns)\n",
+					"\n",
+					"df_liikunta_with_code = pd.merge(df_liikunta, df_kunnat[['Kunta', 'Kunta_koodi']], on='Kunta', how='left')\n",
+					"\n",
+					"\n",
+					"#Valitaan halutut sarakkeet ja nimetään uudelleen\n",
+					"df_selected = df_liikunta_with_code [\n",
+					"    ['Kunta_koodi', 'Kunta', 'Maakunta', 'Asukasluku 2022', \n",
+					"    'Liikuntapaikkojen lkm', 'Liikuntapaikkojen lkm/1000 asukasta', \n",
+					"    'Liikuntapinta-ala m²/asukas', 'Reittien pituus km/asukas']].rename(columns={\n",
+					"    'Asukasluku 2022': 'Asukasluku',\n",
+					"    'Liikuntapaikkojen lkm': 'Liikuntapaikkojen_lkm',\n",
+					"    'Liikuntapaikkojen lkm/1000 asukasta': 'Liikuntapaikkojen_lkm_per_1000',\n",
+					"    'Liikuntapinta-ala m²/asukas': 'Liikuntapinta_ala_m2_per_asukas',\n",
+					"    'Reittien pituus km/asukas': 'Reittien_pituus_km_per_asukas'\n",
+					"})\n",
+					"\n",
+					"df_selected['Kunta_koodi'] = df_selected['Kunta_koodi'].astype(str).str.zfill(3)\n",
+					"\n",
+					"#tsekataan jäikö joku kunta ilman koodia\n",
+					"#print(df_selected['Kunta_koodi'].isna().sum())\n",
+					"\n",
+					"print(df_selected.head(5))"
+				],
+				"execution_count": 4
+			}
+		]
+	}
+}
