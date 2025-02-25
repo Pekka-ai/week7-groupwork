@@ -2,7 +2,7 @@
 
 # Synapse & ETL Project
 
-### Data Modeling Plan
+### 1. Data Modeling Plan
 Objective: Create a data model based on the use case
 
 Steps:
@@ -10,7 +10,7 @@ Steps:
 * Design data model
 * Define relationships
 
-### Create a shared Synapse Workspace
+### 2. Create a shared Synapse Workspace
 Objective: Set up a shared workspace in Azure Synapse Analytics
 
 Steps:
@@ -18,23 +18,30 @@ Steps:
 * Ensure that everyone has appropriate access to workspace
 * Set up SQL dedicated pool and Spark pool
 
-### Integrate GitHub version control
+### 3. Integrate GitHub version control
 Objective: Use GitHub to track and manage changes in code and pipeline configurations
 
 Steps:
 * Create GitHub repository and invite collaborators
 * Set up GitHub repository in Synapse Workspace
 
-### Design pipeline process
+### 4. Design pipeline process
 Objective: Design the ETL pipeline
 
 Steps:
 * Define how data needs to extracted from the source systems
 * Transform data
 * Load data to target system
-* Create pipeline(s)
 
-### Use loaded data in PowerBI to create a report
+### 5. Create pipeline(s)
+Objective: Implement the ETL process as a pipeline
+
+Steps:
+* Create pipeline
+* Add needed activities
+* Test pipeline
+
+### 6. Use loaded data in PowerBI to create a report
 Objective: Use PowerBI to visualize and report
 
 Steps:
