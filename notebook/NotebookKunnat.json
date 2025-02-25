@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "12320a05-e606-47e6-9af0-0a2243da902b"
+				"spark.autotune.trackingId": "d61d22ba-f0b5-4706-abe7-d6711f24f476"
 			}
 		},
 		"metadata": {
@@ -67,7 +67,7 @@
 				"source": [
 					"print(\"moo\")"
 				],
-				"execution_count": 5
+				"execution_count": 14
 			},
 			{
 				"cell_type": "code",
@@ -84,7 +84,7 @@
 					"df = pd.read_excel(file_path, engine=\"openpyxl\", skiprows=1)\n",
 					""
 				],
-				"execution_count": 6
+				"execution_count": 15
 			},
 			{
 				"cell_type": "code",
@@ -98,14 +98,14 @@
 					"# Pakotetaan halutut sarakkeet merkkijonoiksi ja täytetään etunollilla tarvittaessa\n",
 					"df[string_columns] = df[string_columns].astype(str).apply(lambda x: x.str.zfill(x.str.len().max()))"
 				],
-				"execution_count": 7
+				"execution_count": 16
 			},
 			{
 				"cell_type": "code",
 				"source": [
 					"print(df.columns)"
 				],
-				"execution_count": 10
+				"execution_count": 17
 			},
 			{
 				"cell_type": "code",
@@ -123,7 +123,7 @@
 					"\n",
 					"df_selected = df[selected_columns]\n",
 					"\n",
-					"df_selected.rename(columns={\n",
+					"df_selected = df_selected.rename(columns={\n",
 					"    'Kunnan numero': 'Kunta_koodi',\n",
 					"    'Maakunnan koodi': 'Maakunta_koodi',\n",
 					"    'Hyvinvointialueen koodi': 'Hyvinvointialue_koodi',\n",
@@ -136,7 +136,7 @@
 					"\n",
 					""
 				],
-				"execution_count": 12
+				"execution_count": 18
 			},
 			{
 				"cell_type": "code",
@@ -152,7 +152,7 @@
 					"\n",
 					"print(f\"Tiedosto on tallennettu: {output_file_path}\")"
 				],
-				"execution_count": 13
+				"execution_count": 19
 			}
 		]
 	}
