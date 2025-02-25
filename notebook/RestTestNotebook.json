@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e934fcb5-0dec-4c21-ac72-8d36013c0153"
+				"spark.autotune.trackingId": "2651031a-4dc9-47ff-8620-49b06a37ab9d"
 			}
 		},
 		"metadata": {
@@ -59,7 +59,7 @@
 					"\n",
 					"df_paavo.printSchema()"
 				],
-				"execution_count": 2
+				"execution_count": 5
 			},
 			{
 				"cell_type": "code",
@@ -76,10 +76,13 @@
 					"    col(\"data.values\")[1].alias(\"Miehet (HE)\")\n",
 					")\n",
 					"\n",
-					"df_flattened.show()\n",
+					"# Delete all rows starting with MK to keep only cities\n",
+					"df_filtered = df_flattened.filter(~col(\"Kunta\").startswith(\"MK\"))\n",
+					"\n",
+					"df_filtered.show()\n",
 					""
 				],
-				"execution_count": 3
+				"execution_count": 8
 			}
 		]
 	}
