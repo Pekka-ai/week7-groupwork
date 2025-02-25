@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "6571bf9c-8f49-4b34-87ef-e49b20edbfac"
+				"spark.autotune.trackingId": "43652ad8-ec1e-44f8-9fdb-098be668852c"
 			}
 		},
 		"metadata": {
@@ -49,6 +49,20 @@
 		},
 		"cells": [
 			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Notebook Kunnat\n",
+					"### Käsittelee kunnat excelin"
+				]
+			},
+			{
 				"cell_type": "code",
 				"source": [
 					"print(\"moo\")"
@@ -63,16 +77,11 @@
 					"\n",
 					"import pandas as pd\n",
 					"\n",
-					"# ADLS Gen2 -tiedoston polku\n",
+					"# tiedoston polku\n",
 					"file_path = \"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_2024.xlsx\"\n",
 					"\n",
-					"# Lue Excel-tiedosto, ohitetaan ensimmäinen rivi ja käytetään toista riviä otsikkona\n",
+					"# Luetaan Excel-tiedosto, ohitetaan ensimmäinen rivi ja käytetään toista riviä otsikkona\n",
 					"df = pd.read_excel(file_path, engine=\"openpyxl\", skiprows=1)\n",
-					"\n",
-					"# Näytetään DataFrame\n",
-					"print(df.head())\n",
-					"\n",
-					"print(df.columns)\n",
 					""
 				],
 				"execution_count": 6
@@ -80,12 +89,13 @@
 			{
 				"cell_type": "code",
 				"source": [
+					"# Koodiarvot halutaan etunollilla\n",
 					"# Määritellään sarakkeet, jotka halutaan säilyttää merkkijonoina\n",
 					"string_columns = ['Kunnan numero', 'Maakunnan koodi', 'Hyvinvointialueen koodi', \n",
 					"                  'Seutukuntakoodi', 'Suuralue koodi', 'Kuntaryhmä koodi', \n",
 					"                  'Kielisuhde koodi']\n",
 					"\n",
-					"# Pakotetaan halutut sarakkeet merkkijonoiksi ja täytetään nollilla tarvittaessa\n",
+					"# Pakotetaan halutut sarakkeet merkkijonoiksi ja täytetään etunollilla tarvittaessa\n",
 					"df[string_columns] = df[string_columns].astype(str).apply(lambda x: x.str.zfill(x.str.len().max()))"
 				],
 				"execution_count": 11
@@ -93,6 +103,7 @@
 			{
 				"cell_type": "code",
 				"source": [
+					"# Valitaan halutut sarakkeet\n",
 					"selected_columns = [\n",
 					"    'Kunnan numero', 'Kunta', 'Maakunnan koodi', 'Maakunta', \n",
 					"    'Hyvinvointialueen koodi', 'Hyvinvointialue', 'Seutukuntakoodi', \n",
@@ -102,26 +113,22 @@
 					"\n",
 					"df_selected = df[selected_columns]\n",
 					"\n",
-					"# Näytetään DataFrame\n",
-					"print(df_selected.head())\n",
-					"\n",
-					"# Näytetään valittujen sarakkeiden nimet\n",
-					"print(df_selected.columns)"
+					""
 				],
 				"execution_count": 12
 			},
 			{
 				"cell_type": "code",
 				"source": [
+					"# Tallennetaan siivottu tiedosto csv muodossa\n",
 					"output_file_path = \"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_2024_muokattu.csv\"\n",
 					"\n",
-					"# Poistetaan ylimääräiset välilyönnit myös data-sarakkeista\n",
+					"# Poistetaan ylimääräiset välilyönnit data-sarakkeista\n",
 					"df_selected = df_selected.applymap(lambda x: x.strip() if isinstance(x, str) else x)\n",
 					"\n",
 					"# Tallenna CSV-tiedostoon\n",
 					"df_selected.to_csv(output_file_path, index=False, sep=';')\n",
 					"\n",
-					"# Vahvistetaan, että tiedosto on tallennettu\n",
 					"print(f\"Tiedosto on tallennettu: {output_file_path}\")"
 				],
 				"execution_count": 15
