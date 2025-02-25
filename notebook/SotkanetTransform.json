@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "06981701-839c-45bb-b9c6-b46a7987e8ea"
+				"spark.autotune.trackingId": "6dea3823-7989-44c7-822d-9b6040f3d7eb"
 			}
 		},
 		"metadata": {
@@ -125,9 +125,6 @@
 					"\n",
 					"# Insert as headers\n",
 					"df_psykologia.columns = new_headers\n",
-					"\n",
-					"\n",
-					"\n",
 					"\n",
 					"# Define the columns that need to be converted from per 1,000 to percentages\n",
 					"columns_to_convert = [\n",
