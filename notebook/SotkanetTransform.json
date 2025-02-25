@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "06074b84-f69f-41cf-9b4c-46db495a87e3"
+				"spark.autotune.trackingId": "0253c6df-9fbb-4559-9a49-1f4b095beb8d"
 			}
 		},
 		"metadata": {
@@ -94,14 +94,34 @@
 					"df_vaikuttavat = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
 					""
 				],
-				"execution_count": 38
+				"execution_count": 40
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Cleaning Psykologia-table"
+				]
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					"df_psykologia.head(10)"
+					"df_psykologia.head()"
 				],
-				"execution_count": 39
+				"execution_count": 43
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"new_headers = [Kunta, Kuntanumero, muut sarakkeet]"
+				],
+				"execution_count": null
 			}
 		]
 	}
