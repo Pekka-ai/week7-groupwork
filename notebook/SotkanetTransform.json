@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d43a3c53-439d-4d5e-823e-173ded00b582"
+				"spark.autotune.trackingId": "06074b84-f69f-41cf-9b4c-46db495a87e3"
 			}
 		},
 		"metadata": {
@@ -55,13 +55,13 @@
 					"print(\"Moro maailma!\")\n",
 					"\n",
 					"# Get required libraries\n",
-					"%pip install openpyxl xlrd\n",
+					"# to install %pip install openpyxl xlrd\n",
 					"import pyspark as ps \n",
 					"import pandas as pd\n",
 					"import xlrd\n",
 					"import openpyxl"
 				],
-				"execution_count": 12
+				"execution_count": 37
 			},
 			{
 				"cell_type": "markdown",
@@ -73,29 +73,35 @@
 					}
 				},
 				"source": [
-					""
+					"## Reading the files to pd dataframes"
 				]
 			},
 			{
 				"cell_type": "code",
 				"source": [
+					"# Define path and file name\n",
+					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/\"\n",
+					"filename = \"Psykologia.xlsx\"\n",
 					"\n",
-					"# Define the path to your Excel file in Lakehouse storage\n",
-					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/Psykologia.xls\"\n",
+					"# read to df frame with modular path\n",
+					"df_psykologia = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
 					"\n",
-					"# Read Excel file into Pandas DataFrame\n",
-					"df_pandas = pd.read_excel(lakehouse_path, engine='openpyxl')\n",
+					"# Read other files\n",
+					"filename = \"Paihde.xlsx\"\n",
+					"df_paihde = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
 					"\n",
-					"# Show the first 5 rows of the DataFrame\n",
-					"df_pandas.head()\n",
-					"\n",
-					"# If you want to convert the Pandas DataFrame to a Spark DataFrame\n",
-					"df_spark = spark.createDataFrame(df_pandas)\n",
-					"\n",
-					"# Show the first 5 rows of the Spark DataFrame\n",
-					"df_spark.show(5)"
+					"filename = \"VaikuttavatTekijat.xlsx\"\n",
+					"df_vaikuttavat = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
+					""
 				],
-				"execution_count": null
+				"execution_count": 38
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df_psykologia.head(10)"
+				],
+				"execution_count": 39
 			}
 		]
 	}
