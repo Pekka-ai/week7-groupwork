@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "6dea3823-7989-44c7-822d-9b6040f3d7eb"
+				"spark.autotune.trackingId": "ef2d9f5b-c7fb-49a7-81a1-fadb9bb2b261"
 			}
 		},
 		"metadata": {
@@ -60,7 +60,7 @@
 					"import pandas as pd\n",
 					"import openpyxl"
 				],
-				"execution_count": 46
+				"execution_count": 1
 			},
 			{
 				"cell_type": "markdown",
@@ -83,17 +83,31 @@
 					"filename = \"Psykologia.xlsx\"\n",
 					"\n",
 					"# read to df frame with modular path\n",
-					"df_psykologia = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
+					"df_psykologia = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
 					"\n",
 					"# Read other files\n",
 					"filename = \"Paihde.xlsx\"\n",
-					"df_paihde = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
+					"df_paihde = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
 					"\n",
 					"filename = \"VaikuttavatTekijat.xlsx\"\n",
-					"df_vaikuttavat = pd.read_excel(f\"{lakehouse_path}{filename}\", engine='openpyxl', header=1)\n",
-					""
+					"df_vaikuttavat = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")"
 				],
-				"execution_count": 47
+				"execution_count": 12
 			},
 			{
 				"cell_type": "markdown",
@@ -113,7 +127,7 @@
 				"source": [
 					"df_psykologia.head()"
 				],
-				"execution_count": 48
+				"execution_count": 13
 			},
 			{
 				"cell_type": "code",
@@ -133,11 +147,52 @@
 					"    \"Psykiatrian laitoshoidon potilaat\"\n",
 					"]\n",
 					"\n",
+					"# Convert 1/1000 to percentage\n",
 					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)\n",
+					"\n",
+					"# Check that columns have correct number of decimals and that types are correct\n",
 					"\n",
 					"df_psykologia.head()"
 				],
-				"execution_count": 56
+				"execution_count": 15
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Cleaning VaikuttavatTekijat-table"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"df_vaikuttavat.head()"
+				],
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"new_headers = []\n",
+					"\n",
+					"df_vaikuttavat.columns = new_headers\n",
+					"\n",
+					"# Define the columns that need to be converted from per 1,000 to percentages\n",
+					"columns_to_convert = [\n",
+					"    \"\",\n",
+					"    \"\",\n",
+					"    \"\"\n",
+					"]\n",
+					"\n",
+					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)"
+				],
+				"execution_count": null
 			}
 		]
 	}
