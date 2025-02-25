@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "858531b6-1723-4757-b016-d61fd3ef541d"
+				"spark.autotune.trackingId": "dc231dda-7081-4806-904a-3e15abfd43c7"
 			}
 		},
 		"metadata": {
@@ -75,12 +75,12 @@
 					"    col(\"data.values\")[0].cast(IntegerType()).alias(\"Asukkaat yhteensa\"), # Cast to integer\n",
 					"    col(\"data.values\")[1].cast(IntegerType()).alias(\"Miehet\"),\n",
 					"    col(\"data.values\")[2].cast(IntegerType()).alias(\"Naiset\"),\n",
-					"    col(\"data.values\")[3].cast(IntegerType()).alias(\"Asukkaiden keski-ika\"),\n",
+					"    col(\"data.values\")[3].cast(IntegerType()).alias(\"Asukkaiden keski_ika\"),\n",
 					"    col(\"data.values\")[24].cast(IntegerType()).alias(\"18 vuotta tayttaneet yhteensa\"),\n",
 					"    col(\"data.values\")[26].cast(IntegerType()).alias(\"Koulutetut yhteensa\"),\n",
 					"    col(\"data.values\")[27].cast(IntegerType()).alias(\"Ylioppilastutkinnon suorittaneet\"),\n",
 					"    col(\"data.values\")[28].cast(IntegerType()).alias(\"Ammatillisen tutkinnon suorittaneet\"),\n",
-					"    col(\"data.values\")[29].cast(IntegerType()).alias(\"Alimman korkea-asteen tai alemman korkeakoulututkinnon suorittaneet\"),\n",
+					"    col(\"data.values\")[29].cast(IntegerType()).alias(\"Alimman korkea_asteen tai alemman korkeakoulututkinnon suorittaneet\"),\n",
 					"    col(\"data.values\")[30].cast(IntegerType()).alias(\"Ylemman korkeakoulututkinnon suorittaneet\"),\n",
 					"    col(\"data.values\")[32].cast(IntegerType()).alias(\"Asukkaiden keskitulot\"),\n",
 					"    col(\"data.values\")[33].cast(IntegerType()).alias(\"Asukkaiden mediaanitulot\"),\n",
@@ -91,11 +91,11 @@
 					"    col(\"data.values\")[40].cast(FloatType()).alias(\"Asumisvaljyys\"),\n",
 					"    col(\"data.values\")[41].cast(IntegerType()).alias(\"Yksinasuvien taloudet\"),\n",
 					"    col(\"data.values\")[52].cast(IntegerType()).alias(\"Omistusasunnoissa asuvat taloudet\"),\n",
-					"    col(\"data.values\")[53].cast(IntegerType()).alias(\"Vuokra-asunnoissa asuvat taloudet\"),\n",
+					"    col(\"data.values\")[53].cast(IntegerType()).alias(\"Vuokra_asunnoissa asuvat taloudet\"),\n",
 					"    col(\"data.values\")[71].cast(IntegerType()).alias(\"Tyopaikat yhteensa\"),\n",
 					"    col(\"data.values\")[98].cast(IntegerType()).alias(\"Tyolliset\"),\n",
 					"    col(\"data.values\")[99].cast(IntegerType()).alias(\"Tyottomat\"),\n",
-					"    col(\"data.values\")[100].cast(IntegerType()).alias(\"Lapset 0-14-vuotiaat\"),\n",
+					"    col(\"data.values\")[100].cast(IntegerType()).alias(\"Lapset 0_14_vuotiaat\"),\n",
 					"    col(\"data.values\")[101].cast(IntegerType()).alias(\"Opiskelijat\"),\n",
 					"    col(\"data.values\")[102].cast(IntegerType()).alias(\"Elakelaiset\"),\n",
 					").filter(~col(\"Kunta\").startswith(\"MK\"))  # Remove MK-prefixed rows\n",
@@ -103,7 +103,7 @@
 					"df_cleaned.show()\n",
 					""
 				],
-				"execution_count": 21
+				"execution_count": 24
 			}
 		]
 	}
