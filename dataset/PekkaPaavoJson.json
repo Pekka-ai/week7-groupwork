@@ -9,7 +9,9 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation"
+				"type": "AzureBlobFSLocation",
+				"fileName": "pekkatest.json",
+				"fileSystem": "pekkatest"
 			}
 		},
 		"schema": {}
