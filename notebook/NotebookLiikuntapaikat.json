@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "41fb0db3-1d48-4770-814e-64610bae3ab9"
+				"spark.autotune.trackingId": "ec6f2966-66cd-48da-8912-2af885e26748"
 			}
 		},
 		"metadata": {
@@ -48,6 +48,21 @@
 			"sessionKeepAliveTimeout": 30
 		},
 		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Notebook Liikuntapaikat 🏃\n",
+					"### Käsittelee liikuntapaikat excelin ja liittää siihen kuntanumeron\n",
+					"* Aja ensin NotebookKunnat"
+				]
+			},
 			{
 				"cell_type": "code",
 				"source": [
