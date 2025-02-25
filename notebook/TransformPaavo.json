@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "2e2f43e7-f30a-48eb-9e28-64719464e5cb"
+				"spark.autotune.trackingId": "c9854127-c378-4c32-b9b1-3bbfc8edb2ed"
 			}
 		},
 		"metadata": {
@@ -72,14 +72,14 @@
 					"# Key and values are arrays, extract elements (103 in total) and cast wanted columns to correct type \n",
 					"df_cleaned = df_data.select(\n",
 					"    regexp_replace(col(\"data.key\")[0], \"^KU\", \"\").alias(\"Kunta\"),  # Remove 'KU' but keep as string\n",
-					"    col(\"data.values\")[0].cast(IntegerType()).alias(\"Asukkaat_yhteensa (HE)\"), # Cast to integer\n",
-					"    col(\"data.values\")[1].cast(IntegerType()).alias(\"Miehet (HE)\")\n",
+					"    col(\"data.values\")[0].cast(IntegerType()).alias(\"Asukkaat_yhteensa\"), # Cast to integer\n",
+					"    col(\"data.values\")[1].cast(IntegerType()).alias(\"Miehet\")\n",
 					").filter(~col(\"Kunta\").startswith(\"MK\"))  # Remove MK-prefixed rows\n",
 					"\n",
 					"df_cleaned.show()\n",
 					""
 				],
-				"execution_count": 17
+				"execution_count": 18
 			}
 		]
 	}
