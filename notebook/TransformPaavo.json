@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ea9eea4e-c666-49eb-845b-409c2b311ab2"
+				"spark.autotune.trackingId": "a53920b6-e46e-4012-901e-760a61c1ffc9"
 			}
 		},
 		"metadata": {
@@ -87,6 +87,17 @@
 					"    col(\"data.values\")[34].cast(IntegerType()).alias(\"Alimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
 					"    col(\"data.values\")[35].cast(IntegerType()).alias(\"Keskimmaiseen tuloluokkaan kuuluvat asukkaat\"),\n",
 					"    col(\"data.values\")[36].cast(IntegerType()).alias(\"Ylimpaan tuloluokkaan kuuluvat asukkaat\"),\n",
+					"    col(\"data.values\")[39].cast(IntegerType()).alias(\"Talouksien keskikoko\"),\n",
+					"    col(\"data.values\")[40].cast(IntegerType()).alias(\"Asumisvaljyys\"),\n",
+					"    col(\"data.values\")[41].cast(IntegerType()).alias(\"Yksinasuvien taloudet\"),\n",
+					"    col(\"data.values\")[52].cast(IntegerType()).alias(\"Omistusasunnoissa asuvat taloudet\"),\n",
+					"    col(\"data.values\")[53].cast(IntegerType()).alias(\"Vuokra-asunnoissa asuvat taloudet\"),\n",
+					"    col(\"data.values\")[71].cast(IntegerType()).alias(\"Tyopaikat yhteensa\"),\n",
+					"    col(\"data.values\")[98].cast(IntegerType()).alias(\"Tyolliset\"),\n",
+					"    col(\"data.values\")[99].cast(IntegerType()).alias(\"Tyottomat\"),\n",
+					"    col(\"data.values\")[100].cast(IntegerType()).alias(\"Lapset 0-14-vuotiaat\"),\n",
+					"    col(\"data.values\")[101].cast(IntegerType()).alias(\"Opiskelijat\"),\n",
+					"    col(\"data.values\")[102].cast(IntegerType()).alias(\"Elakelaiset\"),\n",
 					").filter(~col(\"Kunta\").startswith(\"MK\"))  # Remove MK-prefixed rows\n",
 					"\n",
 					"df_cleaned.show()\n",
