@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "6085b18c-bdf2-4cb0-94c7-05bb2e5d6a79"
+				"spark.autotune.trackingId": "2a390b8a-3e61-4e11-a52b-eba8b273e9c3"
 			}
 		},
 		"metadata": {
@@ -55,9 +55,7 @@
 					"from pyspark.sql.types import *\n",
 					"\n",
 					"# Read json to spark dataframe\n",
-					"df_paavo = spark.read.option(\"multiline\", \"true\").json(\"abfss://paavotest@group1adls.dfs.core.windows.net/paavotestdata.json\")\n",
-					"\n",
-					"df_paavo.printSchema()"
+					"df_paavo = spark.read.option(\"multiline\", \"true\").json(\"abfss://paavotest@group1adls.dfs.core.windows.net/paavotestdata.json\")"
 				],
 				"execution_count": 19
 			},
