@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "2ec86719-2eb5-4d7c-8f09-04d7bb0e377d"
+				"spark.autotune.trackingId": "f11e01fd-806e-40b3-b037-c7020225d5c6"
 			}
 		},
 		"metadata": {
@@ -103,7 +103,7 @@
 					"\n",
 					"df_cleaned.write.saveAsTable(\"silver_paavo\", mode=\"overwrite\", path=\"abfss://paavotest@group1adls.dfs.core.windows.net/paavo_silver/\")"
 				],
-				"execution_count": 4
+				"execution_count": 5
 			}
 		]
 	}
