@@ -131,7 +131,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebook": {
-						"referenceName": "Notebook 1",
+						"referenceName": "Master Merge",
 						"type": "NotebookReference"
 					},
 					"snapshot": true

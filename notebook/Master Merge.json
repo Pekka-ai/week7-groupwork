@@ -1,5 +1,5 @@
 {
-	"name": "Notebook 1",
+	"name": "Master Merge",
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "97530185-175b-48b1-8cfd-7f39847ed0f5"
+				"spark.autotune.trackingId": "d0e9e6af-3868-4367-9731-2c25923876bb"
 			}
 		},
 		"metadata": {
@@ -25,10 +25,10 @@
 			"enableDebugMode": false,
 			"kernelspec": {
 				"name": "synapse_pyspark",
-				"display_name": "python"
+				"display_name": "Synapse PySpark"
 			},
 			"language_info": {
-				"name": "python"
+				"name": "sql"
 			},
 			"a365ComputeOptions": {
 				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
@@ -48,6 +48,72 @@
 			"sessionKeepAliveTimeout": 30
 		},
 		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SET hive.support.quoted.identifiers=none;\n",
+					"SET spark.sql.parser.quotedRegexColumnNames=true;"
+				],
+				"execution_count": 21
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"-- JOIN with left outer joins\n",
+					"\n",
+					"SELECT  \n",
+					"        kunnat.*\n",
+					"        ,paavo.`(Kunta)?+.+`\n",
+					"        ,paihde.`(Kuntanumero)?+.+`\n",
+					"        ,psykologia.`(Kuntanumero)?+.+`\n",
+					"        ,vaikuttavat.`(Kuntanumero)?+.+`\n",
+					"        ,liikuntapaikat.`(Kunta_koodi)?+.+`\n",
+					"    FROM \n",
+					"        silver_kunnat AS kunnat\n",
+					"        LEFT OUTER JOIN silver_paihde AS paihde\n",
+					"            ON kunnat.Kunta_koodi = paihde.Kuntanumero\n",
+					"        LEFT OUTER JOIN silver_psykologia AS psykologia\n",
+					"            ON kunnat.Kunta_koodi = psykologia.Kuntanumero\n",
+					"        LEFT OUTER JOIN silver_vaikuttavat AS vaikuttavat\n",
+					"            ON kunnat.Kunta_koodi = vaikuttavat.Kuntanumero\n",
+					"        LEFT OUTER JOIN silver_paavo AS paavo\n",
+					"            ON kunnat.Kunta_koodi = paavo.Kunta\n",
+					"        LEFT OUTER JOIN silver_liikuntapaikat AS liikuntapaikat\n",
+					"            ON kunnat.Kunta_koodi = liikuntapaikat.Kunta_koodi\n",
+					"        "
+				],
+				"execution_count": 22
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SET hive.support.quoted.identifiers=column;\n",
+					"SET spark.sql.parser.quotedRegexColumnNames=false;"
+				],
+				"execution_count": 19
+			},
 			{
 				"cell_type": "code",
 				"source": [
