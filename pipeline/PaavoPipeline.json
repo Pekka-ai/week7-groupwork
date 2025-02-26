@@ -1,0 +1,90 @@
+{
+	"name": "PaavoPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Paavo",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "POST",
+						"requestBody": "{\n  \"query\": [\n    {\n      \"code\": \"Alue\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"MK01\",\n          \"KU018\",\n          \"KU049\",\n          \"KU078\",\n          \"KU091\",\n          \"KU106\",\n          \"KU149\",\n          \"KU186\",\n          \"KU224\",\n          \"KU235\",\n          \"KU245\",\n          \"KU257\",\n          \"KU407\",\n          \"KU444\",\n          \"KU434\",\n          \"KU504\",\n          \"KU505\",\n          \"KU543\",\n          \"KU611\",\n          \"KU638\",\n          \"KU616\",\n          \"KU710\",\n          \"KU753\",\n          \"KU755\",\n          \"KU858\",\n          \"KU092\",\n          \"KU927\",\n          \"MK02\",\n          \"KU019\",\n          \"KU202\",\n          \"KU322\",\n          \"KU284\",\n          \"KU304\",\n          \"KU400\",\n          \"KU423\",\n          \"KU430\",\n          \"KU480\",\n          \"KU481\",\n          \"KU503\",\n          \"KU529\",\n          \"KU538\",\n          \"KU561\",\n          \"KU577\",\n          \"KU445\",\n          \"KU631\",\n          \"KU636\",\n          \"KU680\",\n          \"KU704\",\n          \"KU734\",\n          \"KU738\",\n          \"KU761\",\n          \"KU833\",\n          \"KU853\",\n          \"KU895\",\n          \"KU918\",\n          \"MK04\",\n          \"KU050\",\n          \"KU051\",\n          \"KU079\",\n          \"KU102\",\n          \"KU181\",\n          \"KU214\",\n          \"KU230\",\n          \"KU271\",\n          \"KU484\",\n          \"KU531\",\n          \"KU608\",\n          \"KU609\",\n          \"KU684\",\n          \"KU747\",\n          \"KU783\",\n          \"KU886\",\n          \"MK05\",\n          \"KU061\",\n          \"KU082\",\n          \"KU086\",\n          \"KU103\",\n          \"KU109\",\n          \"KU165\",\n          \"KU169\",\n          \"KU433\",\n          \"KU694\",\n          \"KU834\",\n          \"KU981\",\n          \"MK06\",\n          \"KU020\",\n          \"KU108\",\n          \"KU143\",\n          \"KU177\",\n          \"KU211\",\n          \"KU250\",\n          \"KU291\",\n          \"KU418\",\n          \"KU508\",\n          \"KU536\",\n          \"KU562\",\n          \"KU581\",\n          \"KU604\",\n          \"KU619\",\n          \"KU635\",\n          \"KU702\",\n          \"KU790\",\n          \"KU837\",\n          \"KU887\",\n          \"KU908\",\n          \"KU922\",\n          \"KU936\",\n          \"KU980\",\n          \"MK07\",\n          \"KU016\",\n          \"KU081\",\n          \"KU111\",\n          \"KU098\",\n          \"KU142\",\n          \"KU316\",\n          \"KU398\",\n          \"KU560\",\n          \"KU576\",\n          \"KU781\",\n          \"MK08\",\n          \"KU075\",\n          \"KU285\",\n          \"KU286\",\n          \"KU489\",\n          \"KU624\",\n          \"KU935\",\n          \"MK09\",\n          \"KU153\",\n          \"KU405\",\n          \"KU416\",\n          \"KU441\",\n          \"KU580\",\n          \"KU689\",\n          \"KU700\",\n          \"KU739\",\n          \"KU831\",\n          \"MK10\",\n          \"KU046\",\n          \"KU097\",\n          \"KU178\",\n          \"KU213\",\n          \"KU491\",\n          \"KU507\",\n          \"KU593\",\n          \"KU623\",\n          \"KU681\",\n          \"KU740\",\n          \"KU768\",\n          \"MK11\",\n          \"KU140\",\n          \"KU171\",\n          \"KU204\",\n          \"KU239\",\n          \"KU263\",\n          \"KU297\",\n          \"KU402\",\n          \"KU420\",\n          \"KU595\",\n          \"KU686\",\n          \"KU687\",\n          \"KU749\",\n          \"KU762\",\n          \"KU778\",\n          \"KU844\",\n          \"KU857\",\n          \"KU915\",\n          \"KU921\",\n          \"KU925\",\n          \"MK12\",\n          \"KU090\",\n          \"KU146\",\n          \"KU167\",\n          \"KU176\",\n          \"KU260\",\n          \"KU276\",\n          \"KU422\",\n          \"KU426\",\n          \"KU541\",\n          \"KU309\",\n          \"KU607\",\n          \"KU707\",\n          \"KU848\",\n          \"MK13\",\n          \"KU077\",\n          \"KU172\",\n          \"KU179\",\n          \"KU182\",\n          \"KU216\",\n          \"KU226\",\n          \"KU249\",\n          \"KU256\",\n          \"KU265\",\n          \"KU275\",\n          \"KU312\",\n          \"KU410\",\n          \"KU435\",\n          \"KU495\",\n          \"KU500\",\n          \"KU592\",\n          \"KU601\",\n          \"KU729\",\n          \"KU850\",\n          \"KU892\",\n          \"KU931\",\n          \"KU992\",\n          \"MK14\",\n          \"KU005\",\n          \"KU010\",\n          \"KU052\",\n          \"KU145\",\n          \"KU151\",\n          \"KU152\",\n          \"KU218\",\n          \"KU232\",\n          \"KU233\",\n          \"KU300\",\n          \"KU301\",\n          \"KU403\",\n          \"KU408\",\n          \"KU743\",\n          \"KU759\",\n          \"KU846\",\n          \"KU934\",\n          \"KU989\",\n          \"MK15\",\n          \"KU231\",\n          \"KU280\",\n          \"KU287\",\n          \"KU288\",\n          \"KU399\",\n          \"KU440\",\n          \"KU475\",\n          \"KU499\",\n          \"KU545\",\n          \"KU599\",\n          \"KU598\",\n          \"KU893\",\n          \"KU905\",\n          \"KU946\",\n          \"MK16\",\n          \"KU074\",\n          \"KU217\",\n          \"KU236\",\n          \"KU272\",\n          \"KU421\",\n          \"KU584\",\n          \"KU849\",\n          \"KU924\",\n          \"MK17\",\n          \"KU009\",\n          \"KU069\",\n          \"KU071\",\n          \"KU072\",\n          \"KU139\",\n          \"KU208\",\n          \"KU244\",\n          \"KU305\",\n          \"KU317\",\n          \"KU425\",\n          \"KU436\",\n          \"KU483\",\n          \"KU494\",\n          \"KU535\",\n          \"KU563\",\n          \"KU564\",\n          \"KU615\",\n          \"KU625\",\n          \"KU626\",\n          \"KU630\",\n          \"KU678\",\n          \"KU691\",\n          \"KU746\",\n          \"KU748\",\n          \"KU791\",\n          \"KU832\",\n          \"KU859\",\n          \"KU889\",\n          \"KU785\",\n          \"KU977\",\n          \"MK18\",\n          \"KU105\",\n          \"KU205\",\n          \"KU290\",\n          \"KU578\",\n          \"KU620\",\n          \"KU697\",\n          \"KU765\",\n          \"KU777\",\n          \"MK19\",\n          \"KU047\",\n          \"KU148\",\n          \"KU240\",\n          \"KU320\",\n          \"KU241\",\n          \"KU261\",\n          \"KU273\",\n          \"KU498\",\n          \"KU583\",\n          \"KU854\",\n          \"KU614\",\n          \"KU683\",\n          \"KU698\",\n          \"KU732\",\n          \"KU742\",\n          \"KU751\",\n          \"KU758\",\n          \"KU845\",\n          \"KU851\",\n          \"KU890\",\n          \"KU976\",\n          \"MK21\",\n          \"KU035\",\n          \"KU043\",\n          \"KU060\",\n          \"KU062\",\n          \"KU065\",\n          \"KU076\",\n          \"KU170\",\n          \"KU295\",\n          \"KU318\",\n          \"KU417\",\n          \"KU438\",\n          \"KU478\",\n          \"KU736\",\n          \"KU766\",\n          \"KU771\",\n          \"KU941\"\n        ]\n      }\n    },\n    {\n      \"code\": \"Vuosi\",\n      \"selection\": {\n        \"filter\": \"item\",\n        \"values\": [\n          \"2023\"\n        ]\n      }\n    }\n  ],\n  \"response\": {\n    \"format\": \"json\"\n  }\n}",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Rest_Paavo",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ADLS_Paavo",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Transform Paavo",
+				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Get Paavo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "TransformPaavo",
+						"type": "NotebookReference"
+					},
+					"snapshot": true,
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			}
+		],
+		"annotations": []
+	}
+}
