@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "955940b1-5214-4238-9787-7d79fbfb6364"
+				"spark.autotune.trackingId": "005e46b5-4fad-4f26-9a97-0e47af943a11"
 			}
 		},
 		"metadata": {
@@ -58,9 +58,10 @@
 					"%pip install openpyxl\n",
 					"import pyspark as ps \n",
 					"import pandas as pd\n",
-					"import openpyxl"
+					"import openpyxl\n",
+					"import pyspark.sql.functions as F"
 				],
-				"execution_count": 1
+				"execution_count": 30
 			},
 			{
 				"cell_type": "markdown",
@@ -84,7 +85,7 @@
 					"# Read other files\n",
 					""
 				],
-				"execution_count": 20
+				"execution_count": 31
 			},
 			{
 				"cell_type": "markdown",
@@ -135,9 +136,9 @@
 					"\n",
 					"df_psykologia.head()\n",
 					"\n",
-					"spark.createDataFrame(df_paihde).write.saveAsTable(\"silver_psykologia\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/psykologia_silver/\")"
+					"spark.createDataFrame(df_psykologia).write.saveAsTable(\"silver_psykologia\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/psykologia_silver/\")"
 				],
-				"execution_count": 20
+				"execution_count": 34
 			},
 			{
 				"cell_type": "markdown",
@@ -151,13 +152,6 @@
 				"source": [
 					"## Cleaning VaikuttavatTekijat-table"
 				]
-			},
-			{
-				"cell_type": "code",
-				"source": [
-					"df_vaikuttavat.head()"
-				],
-				"execution_count": 6
 			},
 			{
 				"cell_type": "code",
@@ -187,9 +181,9 @@
 					"\n",
 					"df_vaikuttavat.head()\n",
 					"\n",
-					"spark.createDataFrame(df_paihde).write.saveAsTable(\"silver_vaikuttavat\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/vaikuttavat_silver/\")"
+					"spark.createDataFrame(df_vaikuttavat).write.saveAsTable(\"silver_vaikuttavat\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/vaikuttavat_silver/\")"
 				],
-				"execution_count": 22
+				"execution_count": 36
 			},
 			{
 				"cell_type": "markdown",
@@ -203,13 +197,6 @@
 				"source": [
 					"## Cleaning Paihde-Table"
 				]
-			},
-			{
-				"cell_type": "code",
-				"source": [
-					"df_paihde.head()"
-				],
-				"execution_count": 38
 			},
 			{
 				"cell_type": "code",
@@ -256,11 +243,13 @@
 					"\n",
 					"# Check the result\n",
 					"\n",
-					"spark.createDataFrame(df_paihde).write.saveAsTable(\"silver_paihde\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/paihde_silver/\")\n",
+					"spark.createDataFrame(df_paihde) \\\n",
+					"    .withColumn(\"Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset\", F.col(\"Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset\").cast(\"decimal(12, 2)\")) \\\n",
+					"    .write.saveAsTable(\"silver_paihde\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/paihde_silver/\")\n",
 					"\n",
 					"df_paihde.head()"
 				],
-				"execution_count": 24
+				"execution_count": 37
 			},
 			{
 				"cell_type": "code",
