@@ -309,7 +309,8 @@
 					},
 					"sink": {
 						"type": "SqlPoolSink",
-						"allowCopyCommand": true
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
@@ -359,7 +360,8 @@
 					},
 					"sink": {
 						"type": "SqlPoolSink",
-						"allowCopyCommand": true
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
