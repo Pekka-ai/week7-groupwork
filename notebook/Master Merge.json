@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d0e9e6af-3868-4367-9731-2c25923876bb"
+				"spark.autotune.trackingId": "74a636a8-de95-4367-b702-16557f8ec9b9"
 			}
 		},
 		"metadata": {
@@ -65,15 +65,16 @@
 					"collapsed": false
 				},
 				"source": [
-					"-- JOIN with left outer joins\n",
-					"\n",
+					"CREATE OR REPLACE TABLE gold_kuntadata\n",
+					"LOCATION 'abfss://<your_storage_account_name>@<your_storage_account>.dfs.core.windows.net/<your_path>/silver_kuntadata'\n",
+					"AS\n",
 					"SELECT  \n",
 					"        kunnat.*\n",
 					"        ,paavo.`(Kunta)?+.+`\n",
-					"        ,paihde.`(Kuntanumero)?+.+`\n",
-					"        ,psykologia.`(Kuntanumero)?+.+`\n",
-					"        ,vaikuttavat.`(Kuntanumero)?+.+`\n",
-					"        ,liikuntapaikat.`(Kunta_koodi)?+.+`\n",
+					"        ,paihde.`(?!Kunta$)(Kuntanumero)?+.+`\n",
+					"        ,psykologia.`(?!Kunta$)(Kuntanumero)?+.+`\n",
+					"        ,vaikuttavat.`(?!Kunta$)(Kuntanumero)?+.+`\n",
+					"        ,liikuntapaikat.`(?!Asukasluku$|Kunta$|Maakunta$)(Kunta_koodi)?+.+`\n",
 					"    FROM \n",
 					"        silver_kunnat AS kunnat\n",
 					"        LEFT OUTER JOIN silver_paihde AS paihde\n",
@@ -85,8 +86,7 @@
 					"        LEFT OUTER JOIN silver_paavo AS paavo\n",
 					"            ON kunnat.Kunta_koodi = paavo.Kunta\n",
 					"        LEFT OUTER JOIN silver_liikuntapaikat AS liikuntapaikat\n",
-					"            ON kunnat.Kunta_koodi = liikuntapaikat.Kunta_koodi\n",
-					"        "
+					"            ON kunnat.Kunta_koodi = liikuntapaikat.Kunta_koodi"
 				],
 				"execution_count": 22
 			},
@@ -112,14 +112,14 @@
 					"SET hive.support.quoted.identifiers=column;\n",
 					"SET spark.sql.parser.quotedRegexColumnNames=false;"
 				],
-				"execution_count": 19
+				"execution_count": 18
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					""
+					" "
 				],
-				"execution_count": null
+				"execution_count": 19
 			}
 		]
 	}
