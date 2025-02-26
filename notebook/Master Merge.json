@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "9884cb3e-50b3-46da-b3e9-79047ddff653"
+				"spark.autotune.trackingId": "d30ae33e-70d7-46d2-abf7-f4440b6d5f9e"
 			}
 		},
 		"metadata": {
@@ -132,6 +132,11 @@
 					"collapsed": false
 				},
 				"source": [
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_kunta\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_kunta/'\n",
+					"AS\n",
 					"SELECT\n",
 					"    DISTINCT\n",
 					"        Kunta_koodi AS Kuntakoodi,\n",
