@@ -1,0 +1,29 @@
+{
+	"name": "Parquet_ADLS_dimkielisuhde",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "group1-synapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "dim_kielisuhde",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Kielisuhdekoodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Kielisuhde",
+				"type": "UTF8"
+			}
+		]
+	}
+}

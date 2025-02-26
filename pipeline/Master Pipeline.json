@@ -226,7 +226,7 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "Copy dim_seutukunta",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -245,11 +245,39 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet_ADLS_dimseutukunta",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlPool_dimseutukunta",
+						"type": "DatasetReference"
+					}
+				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "Copy dim_kuntaryhma",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -268,11 +296,38 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet_ADLS_dimkuntaryhma",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlPool_dimkuntaryhma",
+						"type": "DatasetReference"
+					}
+				]
 			},
 			{
-				"name": "Copy data4",
+				"name": "Copy dim_kielisuhde",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -291,8 +346,35 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet_ADLS_dimkielisuhde",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlPool_dimkielisuhde",
+						"type": "DatasetReference"
+					}
+				]
 			},
 			{
 				"name": "Copy data5",
