@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "484ef2ee-de6e-4247-8f25-a7ef7e5334f8"
+				"spark.autotune.trackingId": "dd4e9212-be95-48ec-bb6f-308958360c2a"
 			}
 		},
 		"metadata": {
@@ -252,7 +252,9 @@
 					"df_paihde[\"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 1-2lk lukio\"] = df_paihde[\"Vanhemman liiallinen alkoholinkaytto aiheuttanut haittaa 1-2lk lukio\"].round(2)\n",
 					"\n",
 					"# Check the result\n",
-					"df_paihde.head()"
+					"df_paihde.head()\n",
+					"\n",
+					"spark.createDataFrame(df_paihde).write.saveAsTable(\"silver_paihde\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/paihde_silver/\")"
 				],
 				"execution_count": 57
 			},
