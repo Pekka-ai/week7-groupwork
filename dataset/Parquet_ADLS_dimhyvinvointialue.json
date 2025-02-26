@@ -1,0 +1,29 @@
+{
+	"name": "Parquet_ADLS_dimhyvinvointialue",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "group1-synapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "dim_hyvintointialue",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Hyvinvointialuekoodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Hyvinvointialue_nimi",
+				"type": "UTF8"
+			}
+		]
+	}
+}

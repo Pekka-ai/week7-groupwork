@@ -1,0 +1,16 @@
+{
+	"name": "SqlPool_dim_hyvinvointialue",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dim_hyvinvointialue"
+		},
+		"sqlPool": {
+			"referenceName": "group1sqlpool",
+			"type": "SqlPoolReference"
+		}
+	}
+}
