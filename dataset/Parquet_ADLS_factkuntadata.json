@@ -1,0 +1,247 @@
+{
+	"name": "Parquet_ADLS_factkuntadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "group1-synapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "fact_kunta",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Kunta_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Maakunta_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Hyvinvointialue_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Seutukunta_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Suuralue_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Kuntaryhma_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Kielisuhde_koodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Asukkaat_yhteensa",
+				"type": "INT32"
+			},
+			{
+				"name": "Miehet",
+				"type": "INT32"
+			},
+			{
+				"name": "Naiset",
+				"type": "INT32"
+			},
+			{
+				"name": "Asukkaiden_keski_ika",
+				"type": "INT32"
+			},
+			{
+				"name": "18_vuotta_tayttaneet",
+				"type": "INT32"
+			},
+			{
+				"name": "Koulutetut_yhteensa",
+				"type": "INT32"
+			},
+			{
+				"name": "Ylioppilastutkinnon_suorittaneet",
+				"type": "INT32"
+			},
+			{
+				"name": "Ammatillisen_tutkinnon_suorittaneet",
+				"type": "INT32"
+			},
+			{
+				"name": "Alemman_korkeakoulututkinnon_suorittaneet",
+				"type": "INT32"
+			},
+			{
+				"name": "Ylemman_korkeakoulututkinnon_suorittaneet",
+				"type": "INT32"
+			},
+			{
+				"name": "Keskitulot",
+				"type": "INT32"
+			},
+			{
+				"name": "Mediaanitulot",
+				"type": "INT32"
+			},
+			{
+				"name": "Alimpaan_tuloluokkaan_kuuluvat",
+				"type": "INT32"
+			},
+			{
+				"name": "Keskimmaiseen_tuloluokkaan_kuuluvat",
+				"type": "INT32"
+			},
+			{
+				"name": "Ylimpaan_tuloluokkaan_kuuluvat",
+				"type": "INT32"
+			},
+			{
+				"name": "Talouksien_keskikoko",
+				"type": "DECIMAL",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "Asumisvaljyys",
+				"type": "DECIMAL",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "Yksinasuvien_taloudet",
+				"type": "INT32"
+			},
+			{
+				"name": "Omistusasunnoissa_asuvat_taloudet",
+				"type": "INT32"
+			},
+			{
+				"name": "Vuokra_asunnoissa_asuvat_taloudet",
+				"type": "INT32"
+			},
+			{
+				"name": "Tyopaikat",
+				"type": "INT32"
+			},
+			{
+				"name": "Tyolliset",
+				"type": "INT32"
+			},
+			{
+				"name": "Tyottomat",
+				"type": "INT32"
+			},
+			{
+				"name": "Lapset_0_14_vuotiaat",
+				"type": "INT32"
+			},
+			{
+				"name": "Opiskelijat",
+				"type": "INT32"
+			},
+			{
+				"name": "Elakelaiset",
+				"type": "INT32"
+			},
+			{
+				"name": "Alkoholijuomien_myynti_asukasta_kohti_100_prosentin_alkoholina_litraa",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Omalla_paikkakunnalla_helppo_hankkia_huumeita_8_9lk",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Poliisin_tietoon_tulleet_huumausainerikokset",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Poliisin_tietoon_tulleet_rattijuopumustapaukset",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Paihdehuollon_asumispalveluissa_asiakkaita",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Paihdehuollon_avopalveluissa_asiakkaita",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset",
+				"type": "DECIMAL",
+				"precision": 12,
+				"scale": 2
+			},
+			{
+				"name": "Paihtyneiden_sailoonotot",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_4_5lk",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_1_2lk_lukio",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Masennuslaakkeista_korvausta_saaneet_0_17v",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Masennuslaakkeista_korvausta_saaneet_18_64v",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Kuntoutuspsykoterapiaa_saaneet_25_65v",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Psykiatrian_laitoshoidon_potilaat",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Asunnottomat",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Kodin_ulkopuolelle_sijoitetut_13_17v",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Koulutuksen_ulkopuolella_17_24v",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Toimeentulotukea_saavissa_kotitalouksissa_asuvat",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Liikuntapaikkojen_lkm",
+				"type": "INT64"
+			},
+			{
+				"name": "Liikuntapaikkojen_lkm_per_1000",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Liikuntapinta_ala_m2_per_asukas",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Reittien_pituus_km_per_asukas",
+				"type": "DOUBLE"
+			}
+		]
+	}
+}

@@ -430,7 +430,7 @@
 				]
 			},
 			{
-				"name": "Copy data6",
+				"name": "Copy fact_kuntadata",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -449,8 +449,36 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet_ADLS_factkuntadata",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlPool_fact_kuntadata",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
