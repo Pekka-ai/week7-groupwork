@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "dd4e9212-be95-48ec-bb6f-308958360c2a"
+				"spark.autotune.trackingId": "8b7a4f66-0811-4148-824b-9c35d54a36f3"
 			}
 		},
 		"metadata": {
@@ -80,7 +80,6 @@
 				"source": [
 					"# Define path and file name\n",
 					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/\"\n",
-					"filename = \"Psykologia.xlsx\"\n",
 					"\n",
 					"# Read other files\n",
 					""
@@ -105,6 +104,8 @@
 				"source": [
 					"# read to df frame with modular path\n",
 					"\n",
+					"filename = \"Psykologia.xlsx\"\n",
+					"\n",
 					"df_psykologia = pd.read_excel(\n",
 					"    f\"{lakehouse_path}{filename}\", \n",
 					"    engine='openpyxl', \n",
@@ -114,27 +115,29 @@
 					"\n",
 					"# Write new headers as a list\n",
 					"\n",
-					"new_headers = [\"Kunta\", \"Kuntanumero\", \"Masennuslaakkeista korvausta saaneet 0-17v\",\n",
-					"\"Masennuslaakkeista korvausta saaneet 18-64v\", \"Kuntoutuspsykoterapiaa saaneet 25-65v\", \"Psykiatrian laitoshoidon potilaat\"]\n",
+					"new_headers = [\"Kunta\", \"Kuntanumero\", \"Masennuslaakkeista_korvausta_saaneet_0_17v\",\n",
+					"\"Masennuslaakkeista_korvausta_saaneet_18_64v\", \"Kuntoutuspsykoterapiaa_saaneet_25_65v\", \"Psykiatrian_laitoshoidon_potilaat\"]\n",
 					"\n",
 					"# Insert as headers\n",
 					"df_psykologia.columns = new_headers\n",
 					"\n",
 					"# Define the columns that need to be converted from per 1,000 to percentages\n",
 					"columns_to_convert = [\n",
-					"    \"Masennuslaakkeista korvausta saaneet 18-64v\",\n",
-					"    \"Kuntoutuspsykoterapiaa saaneet 25-65v\",\n",
-					"    \"Psykiatrian laitoshoidon potilaat\"\n",
-					"    ]\n",
+					"    \"Masennuslaakkeista_korvausta_saaneet_18_64v\",\n",
+					"    \"Kuntoutuspsykoterapiaa_saaneet_25_65v\",\n",
+					"    \"Psykiatrian_laitoshoidon_potilaat\"\n",
+					"]\n",
 					"\n",
 					"# Convert per 1,000 to percentage\n",
 					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)\n",
 					"\n",
-					"df_psykologia[\"Masennuslaakkeista korvausta saaneet 0-17v\"] = df_psykologia[\"Masennuslaakkeista korvausta saaneet 0-17v\"].round(2)\n",
+					"df_psykologia = df_psykologia.round(2)\n",
 					"\n",
-					"df_psykologia.head()"
+					"df_psykologia.head()\n",
+					"\n",
+					"spark.createDataFrame(df_paihde).write.saveAsTable(\"silver_psykologia\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/psykologia_silver/\")"
 				],
-				"execution_count": 26
+				"execution_count": 20
 			},
 			{
 				"cell_type": "markdown",
