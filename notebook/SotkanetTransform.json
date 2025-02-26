@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "005e46b5-4fad-4f26-9a97-0e47af943a11"
+				"spark.autotune.trackingId": "007aeaeb-5db3-42e0-b7b8-e4b10046cd94"
 			}
 		},
 		"metadata": {
@@ -55,7 +55,6 @@
 					"print(\"Moro maailma!\")\n",
 					"\n",
 					"# Get required libraries\n",
-					"%pip install openpyxl\n",
 					"import pyspark as ps \n",
 					"import pandas as pd\n",
 					"import openpyxl\n",
