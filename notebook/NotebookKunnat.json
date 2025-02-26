@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d61d22ba-f0b5-4706-abe7-d6711f24f476"
+				"spark.autotune.trackingId": "a50c7a8d-016d-4ac2-8dda-388c6fc0f494"
 			}
 		},
 		"metadata": {
@@ -67,7 +67,7 @@
 				"source": [
 					"print(\"moo\")"
 				],
-				"execution_count": 14
+				"execution_count": 1
 			},
 			{
 				"cell_type": "code",
@@ -84,7 +84,7 @@
 					"df = pd.read_excel(file_path, engine=\"openpyxl\", skiprows=1)\n",
 					""
 				],
-				"execution_count": 15
+				"execution_count": 2
 			},
 			{
 				"cell_type": "code",
@@ -98,14 +98,14 @@
 					"# Pakotetaan halutut sarakkeet merkkijonoiksi ja täytetään etunollilla tarvittaessa\n",
 					"df[string_columns] = df[string_columns].astype(str).apply(lambda x: x.str.zfill(x.str.len().max()))"
 				],
-				"execution_count": 16
+				"execution_count": 3
 			},
 			{
 				"cell_type": "code",
 				"source": [
 					"print(df.columns)"
 				],
-				"execution_count": 17
+				"execution_count": 4
 			},
 			{
 				"cell_type": "code",
@@ -136,7 +136,7 @@
 					"\n",
 					""
 				],
-				"execution_count": 18
+				"execution_count": 5
 			},
 			{
 				"cell_type": "code",
@@ -150,9 +150,11 @@
 					"# Tallenna CSV-tiedostoon\n",
 					"df_selected.to_csv(output_file_path, index=False, sep=';')\n",
 					"\n",
-					"print(f\"Tiedosto on tallennettu: {output_file_path}\")"
+					"print(f\"Tiedosto on tallennettu: {output_file_path}\")\n",
+					"\n",
+					"spark.createDataFrame(df_selected).write.saveAsTable(\"silver_kunnat\", mode=\"overwrite\", path=\"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_silver/\")"
 				],
-				"execution_count": 19
+				"execution_count": 7
 			}
 		]
 	}
