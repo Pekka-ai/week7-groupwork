@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "74a636a8-de95-4367-b702-16557f8ec9b9"
+				"spark.autotune.trackingId": "9884cb3e-50b3-46da-b3e9-79047ddff653"
 			}
 		},
 		"metadata": {
@@ -57,7 +57,7 @@
 					"SET hive.support.quoted.identifiers=none;\n",
 					"SET spark.sql.parser.quotedRegexColumnNames=true;"
 				],
-				"execution_count": 21
+				"execution_count": 34
 			},
 			{
 				"cell_type": "code",
@@ -65,8 +65,20 @@
 					"collapsed": false
 				},
 				"source": [
-					"CREATE OR REPLACE TABLE gold_kuntadata\n",
-					"LOCATION 'abfss://<your_storage_account_name>@<your_storage_account>.dfs.core.windows.net/<your_path>/silver_kuntadata'\n",
+					"DROP TABLE IF EXISTS gold_kuntadata"
+				],
+				"execution_count": 38
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE gold_kuntadata\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/fact_kunta/'\n",
 					"AS\n",
 					"SELECT  \n",
 					"        kunnat.*\n",
@@ -88,7 +100,7 @@
 					"        LEFT OUTER JOIN silver_liikuntapaikat AS liikuntapaikat\n",
 					"            ON kunnat.Kunta_koodi = liikuntapaikat.Kunta_koodi"
 				],
-				"execution_count": 22
+				"execution_count": 40
 			},
 			{
 				"cell_type": "markdown",
@@ -112,14 +124,35 @@
 					"SET hive.support.quoted.identifiers=column;\n",
 					"SET spark.sql.parser.quotedRegexColumnNames=false;"
 				],
-				"execution_count": 18
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Kunta_koodi AS Kuntakoodi,\n",
+					"        Kunta AS Kunnan_nimi,\n",
+					"        Maakunta_koodi AS Maakuntakoodi,\n",
+					"        Maakunta AS Maakunnan_nimi,\n",
+					"        Suuralue_koodi AS Suuraluekoodi,\n",
+					"        Suuralue AS Suuralueen_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Kuntakoodi ASC"
+				],
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					" "
+					""
 				],
-				"execution_count": 19
+				"execution_count": null
 			}
 		]
 	}

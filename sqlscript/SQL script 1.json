@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [Kunta_koodi]\n,[Kunta]\n,[Maakunta_koodi]\n,[Maakunta]\n,[Hyvinvointialue_koodi]\n,[Hyvinvointialue]\n,[Seutukunta_koodi]\n,[Seutukunta]\n,[Suuralue_koodi]\n,[Suuralue]\n,[Kuntaryhma_koodi]\n,[Kuntaryhma]\n,[Kielisuhde_koodi]\n,[Kielisuhde]\n,[Asukkaat_yhteensa]\n,[Miehet]\n,[Naiset]\n,[Asukkaiden_keski_ika]\n,[18_vuotta_tayttaneet]\n,[Koulutetut_yhteensa]\n,[Ylioppilastutkinnon_suorittaneet]\n,[Ammatillisen_tutkinnon_suorittaneet]\n,[Alemman_korkeakoulututkinnon_suorittaneet]\n,[Ylemman_korkeakoulututkinnon_suorittaneet]\n,[Keskitulot]\n,[Mediaanitulot]\n,[Alimpaan_tuloluokkaan_kuuluvat]\n,[Keskimmaiseen_tuloluokkaan_kuuluvat]\n,[Ylimpaan_tuloluokkaan_kuuluvat]\n,[Talouksien_keskikoko]\n,[Asumisvaljyys]\n,[Yksinasuvien_taloudet]\n,[Omistusasunnoissa_asuvat_taloudet]\n,[Vuokra_asunnoissa_asuvat_taloudet]\n,[Tyopaikat]\n,[Tyolliset]\n,[Tyottomat]\n,[Lapset_0_14_vuotiaat]\n,[Opiskelijat]\n,[Elakelaiset]\n,[Alkoholijuomien_myynti_asukasta_kohti_100_prosentin_alkoholina_litraa]\n,[Omalla_paikkakunnalla_helppo_hankkia_huumeita_8_9lk]\n,[Poliisin_tietoon_tulleet_huumausainerikokset]\n,[Poliisin_tietoon_tulleet_rattijuopumustapaukset]\n,[Paihdehuollon_asumispalveluissa_asiakkaita]\n,[Paihdehuollon_avopalveluissa_asiakkaita]\n,[Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset]\n,[Paihtyneiden_sailoonotot]\n,[Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_4_5lk]\n,[Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_1_2lk_lukio]\n,[Masennuslaakkeista_korvausta_saaneet_0_17v]\n,[Masennuslaakkeista_korvausta_saaneet_18_64v]\n,[Kuntoutuspsykoterapiaa_saaneet_25_65v]\n,[Psykiatrian_laitoshoidon_potilaat]\n,[Asunnottomat]\n,[Kodin_ulkopuolelle_sijoitetut_13_17v]\n,[Koulutuksen_ulkopuolella_17_24v]\n,[Toimeentulotukea_saavissa_kotitalouksissa_asuvat]\n,[Liikuntapaikkojen_lkm]\n,[Liikuntapaikkojen_lkm_per_1000]\n,[Liikuntapinta_ala_m2_per_asukas]\n,[Reittien_pituus_km_per_asukas]\n FROM [default].[dbo].[gold_kuntadata]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "default",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
