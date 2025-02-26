@@ -48,7 +48,13 @@
 						"type": "BigDataPoolReference"
 					},
 					"executorSize": "Small",
-					"driverSize": "Small"
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"driverSize": "Small",
+					"numExecutors": null
 				}
 			},
 			{
@@ -81,7 +87,13 @@
 						"type": "BigDataPoolReference"
 					},
 					"executorSize": "Small",
-					"driverSize": "Small"
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"driverSize": "Small",
+					"numExecutors": null
 				}
 			},
 			{
@@ -114,13 +126,32 @@
 						"type": "BigDataPoolReference"
 					},
 					"executorSize": "Small",
-					"driverSize": "Small"
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"driverSize": "Small",
+					"numExecutors": null
 				}
 			},
 			{
 				"name": "Merge Data",
 				"type": "SynapseNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Notebook Liikuntapaikat",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Notebook Sotkanet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -134,7 +165,179 @@
 						"referenceName": "Master Merge",
 						"type": "NotebookReference"
 					},
-					"snapshot": true
+					"snapshot": true,
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			},
+			{
+				"name": "Copy dim_kunta",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Merge Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true,
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet_ADLS_dimkunta",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLPool_dimkunta",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Merge Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "Copy data3",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Merge Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "Copy data4",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Merge Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "Copy data5",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Merge Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "Copy data6",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Merge Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
 				}
 			}
 		],
