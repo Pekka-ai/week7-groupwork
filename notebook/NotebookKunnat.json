@@ -1,0 +1,161 @@
+{
+	"name": "NotebookKunnat",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "a50c7a8d-016d-4ac2-8dda-388c6fc0f494"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Notebook Kunnat 🏡\n",
+					"### Käsittelee kunnat excelin"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"print(\"moo\")"
+				],
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"# Asenna tarvittava kirjasto (jos ei ole vielä asennettu)\n",
+					"#%pip install pandas openpyxl\n",
+					"\n",
+					"import pandas as pd\n",
+					"\n",
+					"# tiedoston polku\n",
+					"file_path = \"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_2024.xlsx\"\n",
+					"\n",
+					"# Luetaan Excel-tiedosto, ohitetaan ensimmäinen rivi ja käytetään toista riviä otsikkona\n",
+					"df = pd.read_excel(file_path, engine=\"openpyxl\", skiprows=1)\n",
+					""
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"# Koodiarvot halutaan etunollilla\n",
+					"# Määritellään sarakkeet, jotka halutaan säilyttää merkkijonoina\n",
+					"string_columns = ['Kunnan numero', 'Maakunnan koodi', 'Hyvinvointialueen koodi', \n",
+					"                  'Seutukuntakoodi', 'Suuralue koodi', 'Kuntaryhmä koodi', \n",
+					"                  'Kielisuhde koodi']\n",
+					"\n",
+					"# Pakotetaan halutut sarakkeet merkkijonoiksi ja täytetään etunollilla tarvittaessa\n",
+					"df[string_columns] = df[string_columns].astype(str).apply(lambda x: x.str.zfill(x.str.len().max()))"
+				],
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"print(df.columns)"
+				],
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"#poistetaan tyhjät lyönnit\n",
+					"df.columns = df.columns.str.strip()\n",
+					"\n",
+					"# Valitaan halutut sarakkeet\n",
+					"selected_columns = [\n",
+					"    'Kunnan numero', 'Kunta', 'Maakunnan koodi', 'Maakunta', \n",
+					"    'Hyvinvointialueen koodi', 'Hyvinvointialue', 'Seutukuntakoodi', \n",
+					"    'Seutukunta', 'Suuralue koodi', 'Suuralue', 'Kuntaryhmä koodi', \n",
+					"    'Kuntaryhmä', 'Kielisuhde koodi', 'Kielisuhde'\n",
+					"]\n",
+					"\n",
+					"df_selected = df[selected_columns]\n",
+					"\n",
+					"df_selected = df_selected.rename(columns={\n",
+					"    'Kunnan numero': 'Kunta_koodi',\n",
+					"    'Maakunnan koodi': 'Maakunta_koodi',\n",
+					"    'Hyvinvointialueen koodi': 'Hyvinvointialue_koodi',\n",
+					"    'Seutukuntakoodi': 'Seutukunta_koodi',\n",
+					"    'Suuralue koodi': 'Suuralue_koodi',\n",
+					"    'Kuntaryhmä koodi': 'Kuntaryhma_koodi',\n",
+					"    'Kuntaryhmä': 'Kuntaryhma',\n",
+					"    'Kielisuhde koodi': 'Kielisuhde_koodi'\n",
+					"})\n",
+					"\n",
+					""
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"# Tallennetaan siivottu tiedosto csv muodossa\n",
+					"output_file_path = \"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_2024_muokattu.csv\"\n",
+					"\n",
+					"# Poistetaan ylimääräiset välilyönnit data-sarakkeista\n",
+					"df_selected = df_selected.applymap(lambda x: x.strip() if isinstance(x, str) else x)\n",
+					"\n",
+					"# Tallenna CSV-tiedostoon\n",
+					"df_selected.to_csv(output_file_path, index=False, sep=';')\n",
+					"\n",
+					"print(f\"Tiedosto on tallennettu: {output_file_path}\")\n",
+					"\n",
+					"spark.createDataFrame(df_selected).write.saveAsTable(\"silver_kunnat\", mode=\"overwrite\", path=\"abfss://kunnat@group1adls.dfs.core.windows.net/kunnat_silver/\")"
+				],
+				"execution_count": 7
+			}
+		]
+	}
+}
