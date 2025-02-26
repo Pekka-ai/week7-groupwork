@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "7f6f396b-1949-4a48-9dbb-7edcdc50d6e0"
+				"spark.autotune.trackingId": "5c2fcb00-8fb6-4870-820a-32f6dded2e99"
 			}
 		},
 		"metadata": {
@@ -180,7 +180,57 @@
 			{
 				"cell_type": "code",
 				"source": [
-					""
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_kuntaryhma\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_kuntaryhma/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Kuntaryhma_koodi AS Kuntaryhmakoodi,\n",
+					"        Kuntaryhma AS Kuntaryhma_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Kuntaryhmakoodi ASC"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_kielisuhde\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_kielisuhde/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Kielisuhde_koodi AS Kielisuhdekoodi,\n",
+					"        Kielisuhde AS Kielisuhde\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Kielisuhdekoodi ASC"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_hyvintointialue\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_hyvintointialue/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Hyvinvointialue_koodi AS Hyvinvointialuekoodi,\n",
+					"        Hyvinvointialue AS Hyvinvointialue_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Hyvinvointialuekoodi ASC"
 				],
 				"execution_count": null
 			}
