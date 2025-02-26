@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d30ae33e-70d7-46d2-abf7-f4440b6d5f9e"
+				"spark.autotune.trackingId": "7f6f396b-1949-4a48-9dbb-7edcdc50d6e0"
 			}
 		},
 		"metadata": {
@@ -150,7 +150,32 @@
 					"    ORDER BY\n",
 					"        Kuntakoodi ASC"
 				],
-				"execution_count": null
+				"execution_count": 41
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_seutukunta\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_seutukunta/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Seutukunta_koodi AS Seutukuntakoodi,\n",
+					"        Seutukunta AS Seutukunnan_nimi,\n",
+					"        Maakunta_koodi AS Maakuntakoodi,\n",
+					"        Maakunta AS Maakunnan_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Seutukuntakoodi ASC\n",
+					""
+				],
+				"execution_count": 43
 			},
 			{
 				"cell_type": "code",
