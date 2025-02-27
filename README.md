@@ -1,6 +1,6 @@
 # week7-groupwork
 
-# Synapse & ETL Project
+# Synapse & ETL Project 🔎📊
 
 ### 1. Data Modeling Plan
 **Objective:** Create a data model based on the use case
