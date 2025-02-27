@@ -1,5 +1,5 @@
 {
-	"name": "Notebook 1",
+	"name": "CorrelationHeatmap",
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "906d8302-bb4b-411e-b536-0ec9501e6374"
+				"spark.autotune.trackingId": "c7032727-cdc4-4cb2-b7ca-ead779bfeafb"
 			}
 		},
 		"metadata": {
