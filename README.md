@@ -13,6 +13,9 @@ Steps:
 Final result:
 Star schema with one fact table and five dimension tables, containing various data about municipalities in Finland
 
+![image](https://github.com/user-attachments/assets/967ab18f-005e-47ac-bdd8-9032355f14c4)
+
+
 ### 2. Create a shared Synapse Workspace
 Objective: Set up a shared workspace in Azure Synapse Analytics
 
