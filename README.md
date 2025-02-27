@@ -79,4 +79,4 @@ One dataset will be loaded using REST as source, other datasets loaded from sour
 * Create app
 
 **🌟 Final result:**
-Power BI report with a simple dashboard on basic data about municipalities, e.g, amount of residents, incomes etc and multiple pages with e.g. correlations
+Power BI report with a simple dashboard on basic data about municipalities, e.g, amount of residents, incomes etc + multiple pages with e.g. correlations. Also Python was used to create a heatmap visual.
