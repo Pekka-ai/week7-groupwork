@@ -67,11 +67,11 @@ One dataset will be loaded using REST as source, other datasets loaded from sour
 ![image](https://github.com/user-attachments/assets/a504b5a7-6ecb-47ff-ba40-ac5db3938dc7)
 
 
-### 6. Use loaded data in PowerBI to create a report
-**🎯 Objective:** Use PowerBI to visualize and report
+### 6. Use loaded data in Power BI to create a report
+**🎯 Objective:** Use Power BI to visualize and report
 
 **📍 Steps:**
-* Connect PowerBI to Synapse
+* Connect Power BI to Synapse
 * Import data
 * Build visualizations
 * Create measures and calculations
