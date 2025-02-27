@@ -57,7 +57,7 @@ One dataset will be loaded using REST as source, other datasets loaded from sour
 * Add needed activities
 * Test pipeline
 
-**🌟 Final result:**
+**🌟 Final result:**  
 Pipeline with 
 * Execution of another pipeline, that includes a copy data activity to sink Paavo-dataset from a REST API source to Data Lake and a notebook to transform the data
 * Notebooks for all the other datasets to transform the data and load the data as tables to Data Lake
