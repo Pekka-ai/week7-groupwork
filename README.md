@@ -53,8 +53,12 @@ Steps:
 
 Final result: 
 Pipeline with 
-* Own notebooks for all datasets to transform the data and load the data as tables to Data Lake
-* Master notebook to combine tables to fact and dimension tables and load the new tables to Data Lake
+* Execution of another pipeline, that includes a copy data activity to sink Paavo-dataset from a REST API source to Data Lake and a notebook to transform the data
+* Notebooks for all the other datasets to transform the data and load the data as tables to Data Lake
+* Master notebook to combine previously loaded tables to fact and dimension tables and load the new tables to Data Lake
+* Copy data activities to sink the resulting tables from Data Lake to Data Warehouse (SQL Dedicated Pool)
+![image](https://github.com/user-attachments/assets/a504b5a7-6ecb-47ff-ba40-ac5db3938dc7)
+
 
 ### 6. Use loaded data in PowerBI to create a report
 Objective: Use PowerBI to visualize and report
