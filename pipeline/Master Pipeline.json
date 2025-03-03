@@ -156,7 +156,8 @@
 					{
 						"activity": "Error_Handling",
 						"dependencyConditions": [
-							"Succeeded"
+							"Succeeded",
+							"Completed"
 						]
 					}
 				],
