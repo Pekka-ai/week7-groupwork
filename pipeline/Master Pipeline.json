@@ -5,6 +5,8 @@
 			{
 				"name": "Execute Paavo Pipeline",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -21,6 +23,8 @@
 			{
 				"name": "Notebook Kunnat",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute Paavo Pipeline",
@@ -60,6 +64,8 @@
 			{
 				"name": "Notebook Liikuntapaikat",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Notebook Kunnat",
@@ -99,6 +105,8 @@
 			{
 				"name": "Notebook Sotkanet",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute Paavo Pipeline",
