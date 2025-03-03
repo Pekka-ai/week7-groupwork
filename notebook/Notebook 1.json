@@ -1,0 +1,140 @@
+{
+	"name": "Notebook 1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "f85e494d-2fc7-4891-b08f-f03872462381"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "sql"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"-- Tarkistetaan, onko silver_kunta taulussa puuttuvia arvoja jollain tärkeällä sarakkeella\n",
+					"SELECT COUNT(*) AS missing_data\n",
+					"FROM silver_kunnat\n",
+					"WHERE Kunta_koodi IS NULL OR Maakunta_koodi IS NULL OR Hyvinvointialue_koodi IS NULL\n",
+					"OR Suuralue_koodi IS NULL OR Seutukunta_koodi IS NULL OR Kielisuhde_koodi IS NULL OR Kuntaryhma_koodi IS NULL\n",
+					""
+				],
+				"execution_count": 33
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"-- Tarkistetaan silver_liikuntapaikat\n",
+					"SELECT COUNT(*) AS missing_data_liikunta\n",
+					"FROM silver_liikuntapaikat\n",
+					"WHERE Kunta_koodi IS NULL OR Asukasluku IS NULL OR Liikuntapaikkojen_lkm IS NULL\n",
+					"OR Liikuntapaikkojen_lkm_per_1000 IS NULL"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DESCRIBE EXTENDED silver_paavo;\n",
+					""
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"-- Tarkistetaan silver_paavo   \n",
+					"SELECT COUNT(*) AS missing_data_paavo\n",
+					"FROM silver_paavo\n",
+					"WHERE Kunta IS NULL OR KESKITULOT IS NULL"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"%%pyspark\n",
+					"import pandas as pd\n",
+					"\n",
+					"# SQL-kysely Sparkissa\n",
+					"query = \"SELECT * FROM silver_paavo\"\n",
+					"df_sql = spark.sql(query)\n",
+					"\n",
+					"# Muutetaan Spark DataFrame Pandas DataFrameksi\n",
+					"df_pandas = df_sql.toPandas()\n",
+					"\n",
+					"# Tulostetaan Pandas DataFrame\n",
+					"print(df_pandas)\n",
+					"\n",
+					""
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"missing_data_liikunta = result.collect()[0]['missing_data_liikunta']"
+				],
+				"execution_count": 21
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					""
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
