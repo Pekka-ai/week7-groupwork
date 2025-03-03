@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "dc450d3f-76b9-4af0-b9ad-719ce7115aff"
+				"spark.autotune.trackingId": "3093b230-2631-411e-b818-91fdeb46acf1"
 			}
 		},
 		"metadata": {
@@ -261,20 +261,13 @@
 					"\n",
 					"# Check if any table has missing values or duplicates\n",
 					"for table_name, missing_count, uniqueness_status in validation_results:\n",
-					"    if missing_count == 0 or uniqueness_status == \"Duplicates Found\":\n",
+					"    if missing_count > 0 or uniqueness_status == \"Duplicates Found\":\n",
 					"        raise ValueError(f\"Validation failed for {table_name}: {missing_count} missing values, invalid 'kuntanumero' formats or duplicates found. uniquess status:{uniqueness_status}\")\n",
 					"\n",
 					"print(\"Validation passed for all tables.\")\n",
 					""
 				],
 				"execution_count": 12
-			},
-			{
-				"cell_type": "code",
-				"source": [
-					""
-				],
-				"execution_count": null
 			}
 		]
 	}
