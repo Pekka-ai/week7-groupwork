@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "f85e494d-2fc7-4891-b08f-f03872462381"
+				"spark.autotune.trackingId": "6edf1cc3-c1bb-494c-b68a-f4346f3e110e"
 			}
 		},
 		"metadata": {
@@ -55,13 +55,14 @@
 				},
 				"source": [
 					"-- Tarkistetaan, onko silver_kunta taulussa puuttuvia arvoja jollain tärkeällä sarakkeella\n",
+					"\n",
 					"SELECT COUNT(*) AS missing_data\n",
 					"FROM silver_kunnat\n",
 					"WHERE Kunta_koodi IS NULL OR Maakunta_koodi IS NULL OR Hyvinvointialue_koodi IS NULL\n",
 					"OR Suuralue_koodi IS NULL OR Seutukunta_koodi IS NULL OR Kielisuhde_koodi IS NULL OR Kuntaryhma_koodi IS NULL\n",
 					""
 				],
-				"execution_count": 33
+				"execution_count": 50
 			},
 			{
 				"cell_type": "code",
@@ -69,13 +70,30 @@
 					"collapsed": false
 				},
 				"source": [
-					"-- Tarkistetaan silver_liikuntapaikat\n",
-					"SELECT COUNT(*) AS missing_data_liikunta\n",
-					"FROM silver_liikuntapaikat\n",
-					"WHERE Kunta_koodi IS NULL OR Asukasluku IS NULL OR Liikuntapaikkojen_lkm IS NULL\n",
-					"OR Liikuntapaikkojen_lkm_per_1000 IS NULL"
+					"CREATE OR REPLACE TEMP VIEW missing_data_liikunta AS\n",
+					"SELECT COUNT(*) AS missing_data\n",
+					"FROM silver_kunnat\n",
+					"WHERE Kunta_koodi IS NULL OR Maakunta_koodi IS NULL OR Hyvinvointialue_koodi IS NULL\n",
+					"OR Suuralue_koodi IS NULL OR Seutukunta_koodi IS NULL OR Kielisuhde_koodi IS NULL OR Kuntaryhma_koodi IS NULL"
 				],
-				"execution_count": null
+				"execution_count": 54
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"%%pyspark\n",
+					"\n",
+					"\n",
+					"result_df = spark.sql(\"SELECT * FROM missing_data_liikunta\")\n",
+					"missing_data_count = result_df.collect()[0]['missing_data']\n",
+					"\n",
+					"if missing_data_count > 0:\n",
+					"    raise ValueError(f\"Data validation failed: {missing_data_count} missing records found.\")\n",
+					"else:\n",
+					"    print(\"Data validation passed: No missing records found.\")\n",
+					""
+				],
+				"execution_count": 56
 			},
 			{
 				"cell_type": "code",
@@ -86,7 +104,7 @@
 					"DESCRIBE EXTENDED silver_paavo;\n",
 					""
 				],
-				"execution_count": null
+				"execution_count": 39
 			},
 			{
 				"cell_type": "code",
@@ -99,7 +117,7 @@
 					"FROM silver_paavo\n",
 					"WHERE Kunta IS NULL OR KESKITULOT IS NULL"
 				],
-				"execution_count": null
+				"execution_count": 40
 			},
 			{
 				"cell_type": "code",
@@ -119,14 +137,23 @@
 					"\n",
 					""
 				],
-				"execution_count": null
+				"execution_count": 41
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					"missing_data_liikunta = result.collect()[0]['missing_data_liikunta']"
+					"%%pyspark\n",
+					"\n",
+					"result_df = spark.sql(\"SELECT * FROM missing_data_liikunta\")\n",
+					"missing_data_count = result_df.collect()[0]['missing_data']\n",
+					"\n",
+					"# Tarkista tulos ja heitä virhe, jos count > 0\n",
+					"if missing_data_count > 0:\n",
+					"    raise ValueError(f\"Data validation failed: {missing_data_count} missing records found.\")\n",
+					"else:\n",
+					"    print(\"Data validation passed: No missing records found.\")"
 				],
-				"execution_count": 21
+				"execution_count": 45
 			},
 			{
 				"cell_type": "code",

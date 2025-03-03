@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 7",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [Kunta]\n,[Asukkaat_yhteensa]\n,[Miehet]\n,[Naiset]\n,[Asukkaiden_keski_ika]\n,[18_vuotta_tayttaneet]\n,[Koulutetut_yhteensa]\n,[Ylioppilastutkinnon_suorittaneet]\n,[Ammatillisen_tutkinnon_suorittaneet]\n,[Alemman_korkeakoulututkinnon_suorittaneet]\n,[Ylemman_korkeakoulututkinnon_suorittaneet]\n,[Keskitulot]\n,[Mediaanitulot]\n,[Alimpaan_tuloluokkaan_kuuluvat]\n,[Keskimmaiseen_tuloluokkaan_kuuluvat]\n,[Ylimpaan_tuloluokkaan_kuuluvat]\n,[Talouksien_keskikoko]\n,[Asumisvaljyys]\n,[Yksinasuvien_taloudet]\n,[Omistusasunnoissa_asuvat_taloudet]\n,[Vuokra_asunnoissa_asuvat_taloudet]\n,[Tyopaikat]\n,[Tyolliset]\n,[Tyottomat]\n,[Lapset_0_14_vuotiaat]\n,[Opiskelijat]\n,[Elakelaiset]\n FROM [default].[dbo].[silver_paavo]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "default",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
