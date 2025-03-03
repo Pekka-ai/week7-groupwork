@@ -528,14 +528,7 @@
 			{
 				"name": "Error_Handling",
 				"type": "SynapseNotebook",
-				"dependsOn": [
-					{
-						"activity": "Validate Data",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
