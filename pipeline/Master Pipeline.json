@@ -5,6 +5,8 @@
 			{
 				"name": "Execute Paavo Pipeline",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -21,6 +23,8 @@
 			{
 				"name": "Notebook Kunnat",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute Paavo Pipeline",
@@ -60,6 +64,8 @@
 			{
 				"name": "Notebook Liikuntapaikat",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Notebook Kunnat",
@@ -99,6 +105,8 @@
 			{
 				"name": "Notebook Sotkanet",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute Paavo Pipeline",
@@ -138,15 +146,11 @@
 			{
 				"name": "Merge Data",
 				"type": "SynapseNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Notebook Liikuntapaikat",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Notebook Sotkanet",
+						"activity": "Validate Data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -177,6 +181,8 @@
 			{
 				"name": "Copy dim_kunta",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Merge Data",
@@ -229,6 +235,8 @@
 			{
 				"name": "Copy dim_seutukunta",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Merge Data",
@@ -281,6 +289,8 @@
 			{
 				"name": "Copy dim_kuntaryhma",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Merge Data",
@@ -333,6 +343,8 @@
 			{
 				"name": "Copy dim_kielisuhde",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Merge Data",
@@ -385,6 +397,8 @@
 			{
 				"name": "Copy dim_hyvinvointialue",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Merge Data",
@@ -437,6 +451,8 @@
 			{
 				"name": "Copy fact_kuntadata",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Merge Data",
@@ -485,6 +501,43 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Validate Data",
+				"type": "SynapseNotebook",
+				"dependsOn": [
+					{
+						"activity": "Notebook Sotkanet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Notebook Liikuntapaikat",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "Validate Data",
+						"type": "NotebookReference"
+					},
+					"snapshot": true,
+					"sparkPool": {
+						"referenceName": "group1sparkpool",
+						"type": "BigDataPoolReference"
+					}
+				}
 			}
 		],
 		"annotations": []

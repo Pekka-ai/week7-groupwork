@@ -17,15 +17,15 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "65f99a54-e9fd-401f-b727-8a146017b122"
+				"spark.autotune.trackingId": "4bbd7247-13f3-4bcb-8f30-ac89c6fbd17f"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
 			"enableDebugMode": false,
 			"kernelspec": {
-				"name": "synapse_pyspark",
-				"display_name": "Synapse PySpark"
+				"name": "synapse_sparksql",
+				"display_name": "sql"
 			},
 			"language_info": {
 				"name": "sql"
@@ -48,6 +48,19 @@
 			"sessionKeepAliveTimeout": 30
 		},
 		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
+			},
 			{
 				"cell_type": "code",
 				"metadata": {

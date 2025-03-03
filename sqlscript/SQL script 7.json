@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 7",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [Kunta]\n,[Kuntanumero]\n,[Alkoholijuomien_myynti_asukasta_kohti_100_prosentin_alkoholina_litraa]\n,[Omalla_paikkakunnalla_helppo_hankkia_huumeita_8_9lk]\n,[Poliisin_tietoon_tulleet_huumausainerikokset]\n,[Poliisin_tietoon_tulleet_rattijuopumustapaukset]\n,[Paihdehuollon_asumispalveluissa_asiakkaita]\n,[Paihdehuollon_avopalveluissa_asiakkaita]\n,[Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset]\n,[Paihtyneiden_sailoonotot]\n,[Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_4_5lk]\n,[Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_1_2lk_lukio]\n FROM [default].[dbo].[silver_paihde]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "default",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
