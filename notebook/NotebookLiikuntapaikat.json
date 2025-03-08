@@ -17,7 +17,9 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
+
 				"spark.autotune.trackingId": "89576f7a-1a72-4881-ae05-0fd31f04391b"
+
 			}
 		},
 		"metadata": {
@@ -117,6 +119,7 @@
 					"\n",
 					"df_selected['Kunta_koodi'] = df_selected['Kunta_koodi'].astype(str).str.zfill(3)\n",
 					"\n",
+
 					"columns_to_round = [\n",
 					"    'Liikuntapaikkojen_lkm_per_1000',\n",
 					"    'Liikuntapinta_ala_m2_per_asukas',\n",
@@ -132,6 +135,12 @@
 					"print(df_selected.head(5))\n",
 					"\n",
 					"spark.createDataFrame(df_selected).write.saveAsTable(\"silver_liikuntapaikat\", mode=\"overwrite\", path=\"abfss://liikuntapaikat@group1adls.dfs.core.windows.net/liikuntapaikat_silver/\")"
+
+					"#tsekataan jäikö joku kunta ilman koodia\n",
+					"#print(df_selected['Kunta_koodi'].isna().sum())\n",
+					"\n",
+					"print(df_selected.head(5))"
+
 				],
 				"execution_count": 4
 			}
