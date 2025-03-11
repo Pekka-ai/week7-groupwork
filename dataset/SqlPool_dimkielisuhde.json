@@ -1,0 +1,16 @@
+{
+	"name": "SqlPool_dimkielisuhde",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dim_kielisuhde"
+		},
+		"sqlPool": {
+			"referenceName": "group1sqlpool",
+			"type": "SqlPoolReference"
+		}
+	}
+}

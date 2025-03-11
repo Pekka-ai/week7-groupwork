@@ -1,0 +1,20 @@
+{
+	"name": "Parquet_ADLS_dimkuntaryhma",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "group1-synapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "dim_kuntaryhma",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

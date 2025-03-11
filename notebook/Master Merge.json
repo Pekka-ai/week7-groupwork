@@ -1,0 +1,270 @@
+{
+	"name": "Master Merge",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "4bbd7247-13f3-4bcb-8f30-ac89c6fbd17f"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_sparksql",
+				"display_name": "sql"
+			},
+			"language_info": {
+				"name": "sql"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SET hive.support.quoted.identifiers=none;\n",
+					"SET spark.sql.parser.quotedRegexColumnNames=true;"
+				],
+				"execution_count": 55
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DROP TABLE IF EXISTS gold_kuntadata;\n",
+					"\n",
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"\n",
+					"CREATE TABLE gold_kuntadata\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/fact_kunta/'\n",
+					"AS\n",
+					"SELECT  \n",
+					"        kunnat.Kunta_koodi\n",
+					"        ,kunnat.Maakunta_koodi\n",
+					"        ,kunnat.Hyvinvointialue_koodi\n",
+					"        ,kunnat.Seutukunta_koodi\n",
+					"        ,kunnat.Suuralue_koodi\n",
+					"        ,kunnat.Kuntaryhma_koodi\n",
+					"        ,kunnat.Kielisuhde_koodi\n",
+					"        ,paavo.`(Kunta)?+.+`\n",
+					"        ,paihde.`(?!Kunta$)(Kuntanumero)?+.+`\n",
+					"        ,psykologia.`(?!Kunta$)(Kuntanumero)?+.+`\n",
+					"        ,vaikuttavat.`(?!Kunta$)(Kuntanumero)?+.+`\n",
+					"        ,liikuntapaikat.`(?!Asukasluku$|Kunta$|Maakunta$)(Kunta_koodi)?+.+`\n",
+					"    FROM \n",
+					"        silver_kunnat AS kunnat\n",
+					"        LEFT OUTER JOIN silver_paihde AS paihde\n",
+					"            ON kunnat.Kunta_koodi = paihde.Kuntanumero\n",
+					"        LEFT OUTER JOIN silver_psykologia AS psykologia\n",
+					"            ON kunnat.Kunta_koodi = psykologia.Kuntanumero\n",
+					"        LEFT OUTER JOIN silver_vaikuttavat AS vaikuttavat\n",
+					"            ON kunnat.Kunta_koodi = vaikuttavat.Kuntanumero\n",
+					"        LEFT OUTER JOIN silver_paavo AS paavo\n",
+					"            ON kunnat.Kunta_koodi = paavo.Kunta\n",
+					"        LEFT OUTER JOIN silver_liikuntapaikat AS liikuntapaikat\n",
+					"            ON kunnat.Kunta_koodi = liikuntapaikat.Kunta_koodi"
+				],
+				"execution_count": 56
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"SET hive.support.quoted.identifiers=column;\n",
+					"SET spark.sql.parser.quotedRegexColumnNames=false;"
+				],
+				"execution_count": 57
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DROP TABLE IF EXISTS dim_kunta;\n",
+					"\n",
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_kunta\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_kunta/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Kunta_koodi AS Kuntakoodi,\n",
+					"        Kunta AS Kunnan_nimi,\n",
+					"        Maakunta_koodi AS Maakuntakoodi,\n",
+					"        Maakunta AS Maakunnan_nimi,\n",
+					"        Suuralue_koodi AS Suuraluekoodi,\n",
+					"        Suuralue AS Suuralueen_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Kuntakoodi ASC"
+				],
+				"execution_count": 58
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DROP TABLE IF EXISTS dim_seutukunta;\n",
+					"\n",
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_seutukunta\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_seutukunta/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Seutukunta_koodi AS Seutukuntakoodi,\n",
+					"        Seutukunta AS Seutukunnan_nimi,\n",
+					"        Maakunta_koodi AS Maakuntakoodi,\n",
+					"        Maakunta AS Maakunnan_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Seutukuntakoodi ASC\n",
+					""
+				],
+				"execution_count": 59
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DROP TABLE IF EXISTS dim_kuntaryhma;\n",
+					"\n",
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_kuntaryhma\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_kuntaryhma/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Kuntaryhma_koodi AS Kuntaryhmakoodi,\n",
+					"        Kuntaryhma AS Kuntaryhma_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Kuntaryhmakoodi ASC"
+				],
+				"execution_count": 60
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DROP TABLE IF EXISTS dim_kielisuhde;\n",
+					"\n",
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_kielisuhde\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_kielisuhde/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Kielisuhde_koodi AS Kielisuhdekoodi,\n",
+					"        Kielisuhde AS Kielisuhde\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Kielisuhdekoodi ASC"
+				],
+				"execution_count": 61
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"DROP TABLE IF EXISTS dim_hyvintointialue;\n",
+					"\n",
+					"SET spark.sql.legacy.allowNonEmptyLocationInCTAS=true;\n",
+					"CREATE TABLE dim_hyvintointialue\n",
+					"USING parquet\n",
+					"LOCATION 'abfss://gold@group1adls.dfs.core.windows.net/dim_hyvintointialue/'\n",
+					"AS\n",
+					"SELECT\n",
+					"    DISTINCT\n",
+					"        Hyvinvointialue_koodi AS Hyvinvointialuekoodi,\n",
+					"        Hyvinvointialue AS Hyvinvointialue_nimi\n",
+					"    FROM\n",
+					"        silver_kunnat\n",
+					"    ORDER BY\n",
+					"        Hyvinvointialuekoodi ASC"
+				],
+				"execution_count": 62
+			}
+		]
+	}
+}

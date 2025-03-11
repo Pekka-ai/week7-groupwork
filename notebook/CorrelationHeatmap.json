@@ -1,0 +1,109 @@
+{
+	"name": "CorrelationHeatmap",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "c7032727-cdc4-4cb2-b7ca-ead779bfeafb"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"#start spark session"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"import pandas as pd\n",
+					"\n",
+					"\n",
+					"df_spark = spark.read.parquet(\"abfss://gold@group1adls.dfs.core.windows.net/fact_kunta/\").drop(\"Kunta_koodi\", \"Maakunta_koodi\", \"Hyvinvointialue_koodi\",\n",
+					"\"Seutukunta_koodi\", \"Suuralue_koodi\")\n",
+					"\n",
+					"\n",
+					"df_pandas = df_spark.toPandas()\n",
+					"\n",
+					"correlation_matrix = df_pandas.corr(numeric_only=True)\n",
+					"\n",
+					"print(correlation_matrix)\n",
+					""
+				],
+				"execution_count": 20
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"import pandas as pd\n",
+					"from sklearn.preprocessing import MinMaxScaler\n",
+					"import seaborn as sns\n",
+					"import matplotlib.pyplot as plt\n",
+					"\n",
+					"# Normalize the data using MinMaxScaler\n",
+					"scaler = MinMaxScaler()\n",
+					"df_scaled = pd.DataFrame(scaler.fit_transform(df_pandas), columns=df_pandas.columns)\n",
+					"\n",
+					"# Compute the correlation matrix of the normalized data\n",
+					"correlation_matrix = df_scaled.corr()\n",
+					"\n",
+					"# Set up the figure size (larger size for better clarity)\n",
+					"plt.figure(figsize=(30, 24))  # Adjust the size as needed\n",
+					"\n",
+					"# Create a heatmap\n",
+					"sns.heatmap(correlation_matrix, annot=True, cmap=\"coolwarm\", fmt=\".2f\", linewidths=0.5)\n",
+					"\n",
+					"# Add a title\n",
+					"plt.title(\"Correlation Matrix Heatmap (Normalized Data)\")\n",
+					"\n",
+					"# Show the plot\n",
+					"plt.show()\n",
+					""
+				],
+				"execution_count": 21
+			}
+		]
+	}
+}

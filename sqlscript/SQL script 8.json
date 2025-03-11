@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 8",
+	"properties": {
+		"content": {
+			"query": "SELECT TOP (100) [Kuntakoodi]\n,[Kunnan_nimi]\n,[Maakuntakoodi]\n,[Maakunnan_nimi]\n,[Suuraluekoodi]\n,[Suuralueen_nimi]\n FROM [default].[dbo].[dim_kunta]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "default",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

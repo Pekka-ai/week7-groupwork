@@ -1,0 +1,16 @@
+{
+	"name": "SqlPool_dimseutukunta",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dim_seutukunta"
+		},
+		"sqlPool": {
+			"referenceName": "group1sqlpool",
+			"type": "SqlPoolReference"
+		}
+	}
+}

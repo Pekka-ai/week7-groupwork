@@ -1,0 +1,37 @@
+{
+	"name": "Parquet_ADLS_dimseutukunta",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "group1-synapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "dim_seutukunta",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Seutukuntakoodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Seutukunnan_nimi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Maakuntakoodi",
+				"type": "UTF8"
+			},
+			{
+				"name": "Maakunnan_nimi",
+				"type": "UTF8"
+			}
+		]
+	}
+}

@@ -1,0 +1,262 @@
+{
+	"name": "SotkanetTransform",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "group1sparkpool",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "007aeaeb-5db3-42e0-b7b8-e4b10046cd94"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/23b183d5-a30f-46b8-b418-ad060fb67787/resourceGroups/group1-week7/providers/Microsoft.Synapse/workspaces/group1-synapse/bigDataPools/group1sparkpool",
+				"name": "group1sparkpool",
+				"type": "Spark",
+				"endpoint": "https://group1-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/group1sparkpool",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"# Starting spark\n",
+					"print(\"Moro maailma!\")\n",
+					"\n",
+					"# Get required libraries\n",
+					"import pyspark as ps \n",
+					"import pandas as pd\n",
+					"import openpyxl\n",
+					"import pyspark.sql.functions as F"
+				],
+				"execution_count": 30
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Reading the files to pd dataframes"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"# Define path and file name\n",
+					"lakehouse_path = \"abfss://sotkanet-data@group1adls.dfs.core.windows.net/\"\n",
+					"\n",
+					"# Read other files\n",
+					""
+				],
+				"execution_count": 31
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Cleaning Psykologia-table"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"# read to df frame with modular path\n",
+					"\n",
+					"filename = \"Psykologia.xlsx\"\n",
+					"\n",
+					"df_psykologia = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
+					"\n",
+					"# Write new headers as a list\n",
+					"\n",
+					"new_headers = [\"Kunta\", \"Kuntanumero\", \"Masennuslaakkeista_korvausta_saaneet_0_17v\",\n",
+					"\"Masennuslaakkeista_korvausta_saaneet_18_64v\", \"Kuntoutuspsykoterapiaa_saaneet_25_65v\", \"Psykiatrian_laitoshoidon_potilaat\"]\n",
+					"\n",
+					"# Insert as headers\n",
+					"df_psykologia.columns = new_headers\n",
+					"\n",
+					"# Define the columns that need to be converted from per 1,000 to percentages\n",
+					"columns_to_convert = [\n",
+					"    \"Masennuslaakkeista_korvausta_saaneet_18_64v\",\n",
+					"    \"Kuntoutuspsykoterapiaa_saaneet_25_65v\",\n",
+					"    \"Psykiatrian_laitoshoidon_potilaat\"\n",
+					"]\n",
+					"\n",
+					"# Convert per 1,000 to percentage\n",
+					"df_psykologia[columns_to_convert] = (df_psykologia[columns_to_convert] / 10)\n",
+					"\n",
+					"df_psykologia = df_psykologia.round(2)\n",
+					"\n",
+					"df_psykologia.head()\n",
+					"\n",
+					"spark.createDataFrame(df_psykologia).write.saveAsTable(\"silver_psykologia\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/psykologia_silver/\")"
+				],
+				"execution_count": 34
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Cleaning VaikuttavatTekijat-table"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"filename = \"VaikuttavatTekijat.xlsx\"\n",
+					"df_vaikuttavat = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
+					"\n",
+					"new_headers = [\"Kunta\", \"Kuntanumero\", \"Asunnottomat\", \"Kodin_ulkopuolelle_sijoitetut_13_17v\",\n",
+					"               \"Koulutuksen_ulkopuolella_17_24v\", \"Toimeentulotukea_saavissa_kotitalouksissa_asuvat\"]\n",
+					"\n",
+					"df_vaikuttavat.columns = new_headers\n",
+					"\n",
+					"# List of columns to round\n",
+					"columns_to_dcm = [\n",
+					"    \"Asunnottomat\",\n",
+					"    \"Kodin_ulkopuolelle_sijoitetut_13_17v\",\n",
+					"    \"Koulutuksen_ulkopuolella_17_24v\",\n",
+					"    \"Toimeentulotukea_saavissa_kotitalouksissa_asuvat\"\n",
+					"]\n",
+					"\n",
+					"df_vaikuttavat = df_vaikuttavat.round(2)\n",
+					"\n",
+					"df_vaikuttavat.head()\n",
+					"\n",
+					"spark.createDataFrame(df_vaikuttavat).write.saveAsTable(\"silver_vaikuttavat\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/vaikuttavat_silver/\")"
+				],
+				"execution_count": 36
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Cleaning Paihde-Table"
+				]
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"filename = \"Paihde.xlsx\"\n",
+					"df_paihde = pd.read_excel(\n",
+					"    f\"{lakehouse_path}{filename}\", \n",
+					"    engine='openpyxl', \n",
+					"    header=1,  \n",
+					"    dtype={\"Unnamed: 1\": str}  # Ensure the second column is read as a string\n",
+					")\n",
+					"\n",
+					"# Write new headers as a list\n",
+					"\n",
+					"new_headers = [\n",
+					"    \"Kunta\", \"Kuntanumero\", \"Alkoholijuomien_myynti_asukasta_kohti_100_prosentin_alkoholina_litraa\",\n",
+					"    \"Omalla_paikkakunnalla_helppo_hankkia_huumeita_8_9lk\",\n",
+					"    \"Poliisin_tietoon_tulleet_huumausainerikokset\",\n",
+					"    \"Poliisin_tietoon_tulleet_rattijuopumustapaukset\",\n",
+					"    \"Paihdehuollon_asumispalveluissa_asiakkaita\",\n",
+					"    \"Paihdehuollon_avopalveluissa_asiakkaita\",\n",
+					"    \"Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset\",\n",
+					"    \"Paihtyneiden_sailoonotot\",\n",
+					"    \"Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_4_5lk\",\n",
+					"    \"Vanhemman_liiallinen_alkoholinkaytto_aiheuttanut_haittaa_1_2lk_lukio\"\n",
+					"]\n",
+					"\n",
+					"df_paihde.columns = new_headers\n",
+					"\n",
+					"# List columns to be converted (from per 1,000 to percentage)\n",
+					"columns_to_convert = [\n",
+					"    \"Poliisin_tietoon_tulleet_huumausainerikokset\",\n",
+					"    \"Poliisin_tietoon_tulleet_rattijuopumustapaukset\",\n",
+					"    \"Paihdehuollon_asumispalveluissa_asiakkaita\",\n",
+					"    \"Paihdehuollon_avopalveluissa_asiakkaita\",\n",
+					"    \"Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset\",\n",
+					"    \"Paihtyneiden_sailoonotot\"\n",
+					"]\n",
+					"\n",
+					"# Convert per 1,000 to percentage\n",
+					"df_paihde[columns_to_convert] = df_paihde[columns_to_convert] / 10\n",
+					"\n",
+					"df_paihde = df_paihde.round(2)\n",
+					"\n",
+					"# Check the result\n",
+					"\n",
+					"spark.createDataFrame(df_paihde) \\\n",
+					"    .withColumn(\"Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset\", F.col(\"Paihteiden_vaikutuksen_alaisina_tehdyt_rikokset\").cast(\"decimal(12, 2)\")) \\\n",
+					"    .write.saveAsTable(\"silver_paihde\", mode=\"overwrite\", path=\"abfss://sotkanet-data@group1adls.dfs.core.windows.net/paihde_silver/\")\n",
+					"\n",
+					"df_paihde.head()"
+				],
+				"execution_count": 37
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					""
+				],
+				"execution_count": null
+			}
+		]
+	}
+}

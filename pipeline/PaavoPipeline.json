@@ -52,8 +52,6 @@
 			{
 				"name": "Transform Paavo",
 				"type": "SynapseNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Paavo",
